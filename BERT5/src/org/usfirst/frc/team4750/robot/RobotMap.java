@@ -12,6 +12,7 @@ public class RobotMap {
 	
 	
 	//Motor ports(PWM) 
+	public static final int LIFTER_MOTOR =0;
 	public static final int FRONT_LEFT_MOTOR = 1;
 	public static final int BACK_LEFT_MOTOR = 4;
 	public static final int FRONT_RIGHT_MOTOR = 2;
@@ -20,6 +21,7 @@ public class RobotMap {
 	
 	//Motor Speeds
 	public static final double INATKE_MOTOR_SPEED = -.5;
+	public static double LIFTER_MOTOR_SPEED = 0;
 
 
 	

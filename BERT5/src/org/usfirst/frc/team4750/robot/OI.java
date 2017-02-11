@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4750.robot;
 
 
+import org.usfirst.frc.team4750.robot.commands.Lifting;
 import org.usfirst.frc.team4750.robot.commands.SetIntakeSpeed;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -19,9 +20,11 @@ public class OI {
 	
 	//Joystick buttons
 	Button intakeButton = new JoystickButton(driveStick, 2);
+	Button lifterButton = new JoystickButton(driveStick, 3);
 	
 	public OI(){
 		intakeButton.toggleWhenPressed(new SetIntakeSpeed());
+		lifterButton.toggleWhenPressed(new Lifting());
 	}
 	//commands with buttons
 	
