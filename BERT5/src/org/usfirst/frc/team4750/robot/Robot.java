@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team4750.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -8,9 +7,19 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-//import org.usfirst.frc.team4750.robot.commands.ExampleCommand;
+import org.usfirst.frc.team4750.robot.commands.AutoDriveForwardAndTurn;
+import org.usfirst.frc.team4750.robot.commands.AutoMove;
+import org.usfirst.frc.team4750.robot.commands.TurnToHeading;
+import org.usfirst.frc.team4750.robot.subsystems.Agitator;
+import org.usfirst.frc.team4750.robot.subsystems.AutoSwitch;
+import org.usfirst.frc.team4750.robot.subsystems.Camera;
 import org.usfirst.frc.team4750.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4750.robot.subsystems.Intake;
+import org.usfirst.frc.team4750.robot.subsystems.Lifter;
+import org.usfirst.frc.team4750.robot.subsystems.Shooter;
+import org.usfirst.frc.team4750.robot.subsystems.GearDetector;
+import org.usfirst.frc.team4750.robot.subsystems.PegDetector;
+import org.usfirst.frc.team4750.robot.subsystems.RangeDetector;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -21,14 +30,32 @@ import org.usfirst.frc.team4750.robot.subsystems.Intake;
  */
 public class Robot extends IterativeRobot {
 
-	public static final DriveTrain driveTrain = new DriveTrain();
+	public static final DriveTrain driveTrain = new DriveTrain(
+			   RobotMap.FRONT_LEFT_MOTOR,
+			   RobotMap.BACK_LEFT_MOTOR,
+			   RobotMap.FRONT_RIGHT_MOTOR,
+			   RobotMap.BACK_RIGHT_MOTOR);
+
+	//this defines the subsystems so they can be called along with their subclasses
+	public static final Shooter shooter = new Shooter();
 	public static final Intake intake = new Intake();
-	
+	public static final Agitator agitator = new Agitator();
+	public static final Lifter lifter = new Lifter();
+	public static final Camera camera = new Camera();
+	public static final GearDetector gear = new GearDetector();
+	public static final PegDetector peg = new PegDetector();
+	public static final RangeDetector range = new RangeDetector();
+
 	public static OI oi;
+	public static final AutoSwitch autoswitch = new AutoSwitch();
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
+	public static int cameraposition = 0;
+	
+	AutoMode autoMode;
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -36,10 +63,32 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-		//chooser.addDefault("Default Auto", new ExampleCommand());
+		
+		//chooser.addDefault("Default Auto", new TurnToHeading(0));
 		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", chooser);
+		//SmartDashboard.putData("Auto mode", chooser);
+		
+		//Set the mode we're going to run in Autonomous...
+		// Normally we'd read this from the mechanical switch
+		autoMode = AutoMode.TURN_TO_HEADING;
+		
+		// (left speed, right speed, time)
+		// Ok, see which position the switch is in
+		switch(autoMode){
+			case MOVE_FORWARD:
+				autonomousCommand = new AutoMove(+1.0, 1.0, RobotMap.REACH_TIME);
+				break;
+				
+		// (driveSpeed, driveTime, turnSpeed, turnTime)
+			case DRIVE_FORWARD_AND_TURN:
+				autonomousCommand = new AutoDriveForwardAndTurn(+1, RobotMap.REACH_TIME, +1, RobotMap.TURN_TIME);
+				break;
+			case TURN_TO_HEADING:
+				autonomousCommand = new TurnToHeading(90.0f);
+				break;
+		}
 	}
+
 
 	/**
 	 * This function is called once each time the robot enters Disabled mode.
@@ -69,7 +118,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = chooser.getSelected();
+		// always start up the cameras
+		camera.init();
+		//autonomousCommand = chooser.getSelected();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -78,9 +129,18 @@ public class Robot extends IterativeRobot {
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
 
+		// read the command to run from the switch.
+		// commenting this out for now so we can test rotating with the IMU
+		
+		//autonomousCommand = autoswitch.getMode();
+				
+		
 		// schedule the autonomous command (example)
+		
+		SmartDashboard.putBoolean("Robot.autonomousInit()",true);
 		if (autonomousCommand != null)
 			autonomousCommand.start();
+
 	}
 
 	/**
@@ -88,16 +148,24 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+		SmartDashboard.putBoolean("Robot.autonomousPeriodic()",true);
 		Scheduler.getInstance().run();
 	}
 
 	@Override
 	public void teleopInit() {
+		
+		// if we didn't previously initialize (because in testing we skipped the autonomous mode)
+		// go ahead and initialize it now.
+		if(!camera.isInitialized())
+			camera.init();
+		
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		if (autonomousCommand != null)autonomousCommand.cancel();
+		// this makes it so the agitator starts running when the robot comes on
 	}
 
 	/**
@@ -106,6 +174,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		Robot.gear.Output();
+		Robot.range.Output();
+		Robot.peg.Output();
 	}
 
 	/**

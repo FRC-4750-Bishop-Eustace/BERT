@@ -4,53 +4,46 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team4750.robot.Robot;
-import org.usfirst.frc.team4750.robot.RobotMap;
 
 /**
  *
  */
 public class MecDrive extends Command {
-	double leftSpeed, rightSpeed;
-	
-	public MecDrive() {
+
+
+	public MecDrive(){
+//		SmartDashboard.putBoolean("MecDrive.MecDrive()", true);
 		requires(Robot.driveTrain);
-		//this.leftSpeed = 0;
-		//this.rightSpeed = 0;
-		
 	}
 	
-
-	// Called just before this Command runs the first time
-	@Override
-	protected void initialize() {
-		/*
-		Robot.driveTrain.setLeftDriveMotor(leftSpeed);
-		Robot.driveTrain.setRightDriveMotor(rightSpeed);
-		*/
+	protected void initialize(){
+//		SmartDashboard.putBoolean("MecDrive.initialize()", true);
+		requires(Robot.driveTrain);
 	}
-
-	// Called repeatedly when this Command is scheduled to run
-	@Override
-	protected void execute() {
-		SmartDashboard.putBoolean("Is MechDrive executing?", true);
+	
+	protected void execute(){
+		//this can used to test to see if a command is running for debugging
+		SmartDashboard.putBoolean("Is MecDrive executing?", true);
 		Robot.driveTrain.controllerDrive(Robot.oi.driveStick);
-		
 	}
-
-	// Make this return true when this Command no longer needs to run execute()
+	
 	@Override
 	protected boolean isFinished() {
+		// TODO Auto-generated method stub
+//		SmartDashboard.putBoolean("MecDrive.isFinished()", true);
 		return false;
 	}
-
-	// Called once after isFinished returns true
-	@Override
-	protected void end() {
+	
+	protected void end(){
+//		SmartDashboard.putBoolean("MecDrive.end()", true);
+		Robot.driveTrain.setDriveMotors(0, 0);
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
+		// TODO Auto-generated method stub
+//		SmartDashboard.putBoolean("MecDrive.interrupted()", true);
+		//end();
 	}
+
 }

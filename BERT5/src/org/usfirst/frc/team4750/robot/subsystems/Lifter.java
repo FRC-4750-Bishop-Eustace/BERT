@@ -5,10 +5,10 @@ import org.usfirst.frc.team4750.robot.RobotMap;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class Intake extends Subsystem {
-
-	//defines motor
-	VictorSP intakeMotor = new VictorSP(RobotMap.INTAKE_MOTOR);
+public class Lifter extends Subsystem {
+	
+	// this defines the motor for the victor
+	VictorSP lifterMotor = new VictorSP(RobotMap.LIFTER_MOTOR);
 	
 	@Override
 	protected void initDefaultCommand() {
@@ -16,11 +16,9 @@ public class Intake extends Subsystem {
 
 	}
 	
-
-	public void setIntakeSpeed(double intakeMotorSpeed) {
-		// TODO Auto-generated method stub
-		// used as a placeholder for the speed
-		intakeMotor.set(intakeMotorSpeed);
+	public void setLifterSpeed(double lifterSpeed){
+		// this just sets the motor to a speed that is a placeholder
+		lifterMotor.set(lifterSpeed);
 	}
 
 }
