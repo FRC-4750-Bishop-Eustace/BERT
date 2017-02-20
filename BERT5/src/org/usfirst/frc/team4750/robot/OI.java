@@ -13,9 +13,6 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	//Variables for cubing of the inputs
-	public double driveStickXcube, driveStickYcube, driveStickTwistcube;
-	
 	//Define the Joystick
 	public Joystick driveStick = new Joystick(RobotMap.DRIVE_STICK_USB_PORT);
 	

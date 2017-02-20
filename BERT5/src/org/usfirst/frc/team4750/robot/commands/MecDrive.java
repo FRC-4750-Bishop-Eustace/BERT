@@ -5,11 +5,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team4750.robot.Robot;
 
+import com.kauailabs.navx.frc.AHRS;
+
 /**
  *
  */
 public class MecDrive extends Command {
-
+	//AHRS ahrs;
 
 	public MecDrive(){
 //		SmartDashboard.putBoolean("MecDrive.MecDrive()", true);
@@ -24,6 +26,7 @@ public class MecDrive extends Command {
 	protected void execute(){
 		//this can used to test to see if a command is running for debugging
 		SmartDashboard.putBoolean("Is MecDrive executing?", true);
+		//SmartDashboard.putNumber("DisplacementY", ahrs.getDisplacementY());
 		Robot.driveTrain.controllerDrive(Robot.oi.driveStick);
 	}
 	

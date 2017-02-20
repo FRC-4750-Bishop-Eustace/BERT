@@ -5,10 +5,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class AutoDriveForwardAndTurn extends CommandGroup {
 		
-	public AutoDriveForwardAndTurn(double driveSpeed, double driveTime, double turnSpeed, double turnTime){
+	public AutoDriveForwardAndTurn(double driveSpeed, float distance, float turn){
 		//SmartDashboard.putBoolean("AutoDriveForwardAndTurn.AutoDriveForwardAndTurn()",true);
-		addSequential(new AutoMove(driveSpeed, driveSpeed, driveTime));
-		addSequential(new AutoMove(turnSpeed, -turnSpeed, turnTime));
+		addSequential(new AutoMove(driveSpeed, driveSpeed, distance));
+		addSequential(new TurnToHeading(turn));
+		//addSequential(new AutoMove(driveSpeed, driveSpeed, driveTime));
 	}
 
 }

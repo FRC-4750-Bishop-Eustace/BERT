@@ -23,10 +23,10 @@ public class RobotMap {
 	
 	
 	//Motor Speeds; + is forward - is backwards; adjust speeds here and only here, everything else will follow
-	public static final double SHOOTER_MOTOR_SPEED = 1;
+	public static final double SHOOTER_MOTOR_SPEED = .85;
 	public static final double INTAKE_MOTOR_SPEED = -1;
 	public static final double LIFTER_MOTOR_SPEED = 1; 
-	public static final double AGITATOR_MOTOR_SPEED = .4;
+	public static final double AGITATOR_MOTOR_SPEED = -1;
 
 	
 	public static final int SELECTOR_HIGH_DIO = 1;  // (On switch, closest to the middle)
@@ -34,8 +34,8 @@ public class RobotMap {
 	public static final int SELECTOR_LOW_DIO = 3; // (on switch, edge)
 
 	//Timers
-	public static final double REACH_TIME = 5;
-	public static final double TURN_TIME = 10;
+	public static final double REACH_TIME = 2;
+	public static final double TURN_TIME = 2;
 
 	//Cameras
 	public static final int CAMERA1 = 0;

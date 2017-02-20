@@ -78,7 +78,7 @@ public class TurnToHeading extends Command {
 	
 	// Called repeatedly when this Command is scheduled to run
 	@Override
-	protected void execute() {
+	protected void execute() {		
 		SmartDashboard.putString("TurnToHeading.IMU Setup?", "Running");
 		// read the current value from the IMU.
 		lastheadingread = ahrs.getFusedHeading(); // READ FROM IMU

@@ -49,12 +49,12 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static final AutoSwitch autoswitch = new AutoSwitch();
 
-	Command autonomousCommand;
+	public Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
 	public static int cameraposition = 0;
 	
-	AutoMode autoMode;
+	public AutoMode autoMode;
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -70,18 +70,18 @@ public class Robot extends IterativeRobot {
 		
 		//Set the mode we're going to run in Autonomous...
 		// Normally we'd read this from the mechanical switch
-		autoMode = AutoMode.TURN_TO_HEADING;
+		autoMode = Robot.autoswitch.getMode();
 		
 		// (left speed, right speed, time)
 		// Ok, see which position the switch is in
 		switch(autoMode){
 			case MOVE_FORWARD:
-				autonomousCommand = new AutoMove(+1.0, 1.0, RobotMap.REACH_TIME);
+				autonomousCommand = new AutoMove(+.5, -.5, .5f);
 				break;
 				
 		// (driveSpeed, driveTime, turnSpeed, turnTime)
 			case DRIVE_FORWARD_AND_TURN:
-				autonomousCommand = new AutoDriveForwardAndTurn(+1, RobotMap.REACH_TIME, +1, RobotMap.TURN_TIME);
+				autonomousCommand = new AutoDriveForwardAndTurn(+1.0, 1.0f, 90.0f);
 				break;
 			case TURN_TO_HEADING:
 				autonomousCommand = new TurnToHeading(90.0f);
