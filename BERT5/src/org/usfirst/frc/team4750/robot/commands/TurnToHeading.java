@@ -142,7 +142,7 @@ public class TurnToHeading extends Command {
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
 		// if we're within 2 degrees of the target,
-		if (Math.abs(offset) <2.0) {
+		if (Math.abs(offset) <1.0) {
 			//close enough!
 			return true;
 		}
