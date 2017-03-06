@@ -38,7 +38,7 @@ public class DriveTrain extends Subsystem {
 	public void controllerDrive(Joystick i) {
 		//sets up the joystick and which axis controls what. (x,y,rotation,gyro)
 		//we pass inputs that are cube so we have better control when we make fine adjustments.
-		robotDrive.mecanumDrive_Cartesian(i.getX(), i.getY(),i.getThrottle(), Robot.cameraposition*-90);
+		robotDrive.mecanumDrive_Cartesian(i.getX(), i.getY(),i.getThrottle(), Robot.cameraposition*-180);
 	}
 
 	public void initDefaultCommand() {

@@ -91,9 +91,10 @@ public class Camera extends Subsystem  {
 		// cycle the camera position (out of 4 stages) to change the drive angle
 		// we will also need to do switching of the servos for the camera modes.
 		Robot.cameraposition++;
-		if(Robot.cameraposition==4) 
+		if(Robot.cameraposition==1) 
 			Robot.cameraposition=0;
-		SmartDashboard.putInt("CameraDirection", Robot.cameraposition*-90);
+		if (Robot.cameraposition == 0) SmartDashboard.putString("CameraDirection", "Front");
+		if (Robot.cameraposition == 1) SmartDashboard.putString("CameraDirection", "Back");
 	}
 	
 	@Override

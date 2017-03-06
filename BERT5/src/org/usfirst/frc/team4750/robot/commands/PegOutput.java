@@ -1,10 +1,8 @@
 package org.usfirst.frc.team4750.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.DigitalInput;
 
 import org.usfirst.frc.team4750.robot.Robot;
-import org.usfirst.frc.team4750.robot.RobotMap;
 /**
  *
  */
@@ -14,8 +12,6 @@ public class PegOutput extends Command {
 		//requires(Robot.exampleSubsystem);
 		requires(Robot.peg);
 	}
-	
-	DigitalInput input = new DigitalInput(RobotMap.PEG_SENSOR);
 
 	// Called just before this Command runs the first time
 	@Override

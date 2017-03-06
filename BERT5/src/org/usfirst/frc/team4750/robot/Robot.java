@@ -7,8 +7,10 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team4750.robot.commands.AutoDriveForwardAndTurn;
 import org.usfirst.frc.team4750.robot.commands.AutoMove;
+import org.usfirst.frc.team4750.robot.commands.DeliverGearLeft;
+import org.usfirst.frc.team4750.robot.commands.DeliverGearRight;
+import org.usfirst.frc.team4750.robot.commands.DeliverGearStraight;
 import org.usfirst.frc.team4750.robot.commands.TurnToHeading;
 import org.usfirst.frc.team4750.robot.subsystems.Agitator;
 import org.usfirst.frc.team4750.robot.subsystems.AutoSwitch;
@@ -19,7 +21,9 @@ import org.usfirst.frc.team4750.robot.subsystems.Lifter;
 import org.usfirst.frc.team4750.robot.subsystems.Shooter;
 import org.usfirst.frc.team4750.robot.subsystems.GearDetector;
 import org.usfirst.frc.team4750.robot.subsystems.PegDetector;
+import org.usfirst.frc.team4750.robot.subsystems.PegIndicatorLight;
 import org.usfirst.frc.team4750.robot.subsystems.RangeDetector;
+import org.usfirst.frc.team4750.robot.subsystems.RelaySwitch;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -45,16 +49,18 @@ public class Robot extends IterativeRobot {
 	public static final GearDetector gear = new GearDetector();
 	public static final PegDetector peg = new PegDetector();
 	public static final RangeDetector range = new RangeDetector();
+	public static final RelaySwitch relay = new RelaySwitch();
+	public static final PegIndicatorLight peglight = new PegIndicatorLight();
 
 	public static OI oi;
 	public static final AutoSwitch autoswitch = new AutoSwitch();
 
-	public Command autonomousCommand;
+	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
 	public static int cameraposition = 0;
 	
-	public AutoMode autoMode;
+	AutoMode autoMode;
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -75,16 +81,20 @@ public class Robot extends IterativeRobot {
 		// (left speed, right speed, time)
 		// Ok, see which position the switch is in
 		switch(autoMode){
+		
+			//start middle
 			case MOVE_FORWARD:
-				autonomousCommand = new AutoMove(+.5, -.5, .5f);
+				autonomousCommand = new DeliverGearStraight();
 				break;
 				
-		// (driveSpeed, driveTime, turnSpeed, turnTime)
-			case DRIVE_FORWARD_AND_TURN:
-				autonomousCommand = new AutoDriveForwardAndTurn(+1.0, 1.0f, 90.0f);
+			//Start left side
+			case DRIVE_FORWARD_AND_TURN_RIGHT:
+				autonomousCommand = new DeliverGearLeft();
 				break;
-			case TURN_TO_HEADING:
-				autonomousCommand = new TurnToHeading(90.0f);
+				
+			//start right side
+			case DRIVE_FORWARD_AND_TURN_LEFT:
+				autonomousCommand = new DeliverGearRight();
 				break;
 		}
 	}
@@ -165,6 +175,7 @@ public class Robot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		if (autonomousCommand != null)autonomousCommand.cancel();
+		Robot.peglight.setLight(false);
 		// this makes it so the agitator starts running when the robot comes on
 	}
 

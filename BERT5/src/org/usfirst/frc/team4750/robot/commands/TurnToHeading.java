@@ -78,7 +78,7 @@ public class TurnToHeading extends Command {
 	
 	// Called repeatedly when this Command is scheduled to run
 	@Override
-	protected void execute() {		
+	protected void execute() {
 		SmartDashboard.putString("TurnToHeading.IMU Setup?", "Running");
 		// read the current value from the IMU.
 		lastheadingread = ahrs.getFusedHeading(); // READ FROM IMU
@@ -142,7 +142,7 @@ public class TurnToHeading extends Command {
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
 		// if we're within 2 degrees of the target,
-		if (Math.abs(offset) <1.0) {
+		if (Math.abs(offset) <2.0) {
 			//close enough!
 			return true;
 		}

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4750.robot.subsystems;
 
+import org.usfirst.frc.team4750.robot.Robot;
 import org.usfirst.frc.team4750.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -11,6 +12,7 @@ public class PegDetector extends Subsystem {
 	// here. Call these from Commands.
 	
 	DigitalInput input = new DigitalInput(RobotMap.PEG_SENSOR);
+	DigitalInput input2 = new DigitalInput(RobotMap.SECOND_PEG_SENSOR);
 
 	protected void initDefaultCommand() {
 		// Set the default command for a subsystem here.
@@ -18,8 +20,16 @@ public class PegDetector extends Subsystem {
 		
 	}
 	
-	public void Output() {
-		SmartDashboard.putBoolean("Peg Detector", !input.get());
+	public boolean Output() {
+		SmartDashboard.putBoolean("Peg Detector", !input.get());//made it so the outputs are correct
+		SmartDashboard.putBoolean("Peg Detector2", !input2.get());
+		if(!input.get() == false && !input2.get() == false){
+			Robot.relay.relaySwitch(false);
+			return false;
+		}else{
+			Robot.peglight.setLight(true);
+			return true;
+		}
 	}
 
 }

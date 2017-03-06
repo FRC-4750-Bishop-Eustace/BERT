@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4750.robot.subsystems;
 
+import org.usfirst.frc.team4750.robot.Robot;
 import org.usfirst.frc.team4750.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -18,8 +19,12 @@ public class GearDetector extends Subsystem {
 		
 	}
 	
-	public void Output(){
+	public boolean Output(){
 		//Voltage increases as object gets closer
 		SmartDashboard.putNumber("Gear Detector", input.getVoltage());
+		if(input.getVoltage() <= .04){
+			return true;
+		}
+		return false;
 	}
 }
