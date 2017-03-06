@@ -48,7 +48,7 @@ public class Robot extends IterativeRobot {
 	public static final Camera camera = new Camera();
 	public static final GearDetector gear = new GearDetector();
 	public static final PegDetector peg = new PegDetector();
-	public static final RangeDetector range = new RangeDetector();
+	//public static final RangeDetector range = new RangeDetector();
 	public static final RelaySwitch relay = new RelaySwitch();
 	public static final PegIndicatorLight peglight = new PegIndicatorLight();
 
@@ -175,7 +175,6 @@ public class Robot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		if (autonomousCommand != null)autonomousCommand.cancel();
-		Robot.peglight.setLight(false);
 		// this makes it so the agitator starts running when the robot comes on
 	}
 
@@ -185,9 +184,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		Robot.gear.Output();
-		Robot.range.Output();
-		Robot.peg.Output();
+		if(Robot.gear.Output() == true) Robot.relay.relaySwitch(false);
+		//Robot.range.Output();
+		if(Robot.peg.Output() == true) Robot.relay.relaySwitch(true);
 	}
 
 	/**

@@ -10,6 +10,10 @@ public class DeliverGearLeft extends CommandGroup {
 		addSequential(new AutoMove(.3, -.3, 2.6f));
 		addSequential(new TurnToHeading(60f));
 		addSequential(new AutoMove(.3, -.3, 2.6f));
+		addSequential(new WaitForGear());
+		addSequential(new AutoMove(-.3, .3, .3f));
+		addSequential(new TurnToHeading(-60f));
+		addSequential(new AutoMove(1, -1, 1f));
 	}
 
 }

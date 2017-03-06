@@ -10,7 +10,7 @@ public class RangeOutput extends Command {
 	public RangeOutput() {
 		// Use requires() here to declare subsystem dependencies
 		//requires(Robot.exampleSubsystem);
-		requires(Robot.range);
+		//requires(Robot.range);
 	}
 	
 	// Called just before this Command runs the first time
@@ -22,7 +22,7 @@ public class RangeOutput extends Command {
 	@Override
 	protected void execute() {
 		
-		Robot.range.Output();
+		//Robot.range.Output();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
