@@ -27,7 +27,7 @@ public class PegDetector extends Subsystem {
 			Robot.relay.relaySwitch(false);
 			return false;
 		}else{
-			Robot.peglight.setLight(true);
+			Robot.relay.relaySwitch(true);
 			return true;
 		}
 	}

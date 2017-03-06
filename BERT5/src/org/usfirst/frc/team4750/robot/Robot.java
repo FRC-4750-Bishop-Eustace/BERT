@@ -50,7 +50,7 @@ public class Robot extends IterativeRobot {
 	public static final PegDetector peg = new PegDetector();
 	//public static final RangeDetector range = new RangeDetector();
 	public static final RelaySwitch relay = new RelaySwitch();
-	public static final PegIndicatorLight peglight = new PegIndicatorLight();
+	//public static final PegIndicatorLight peglight = new PegIndicatorLight();
 
 	public static OI oi;
 	public static final AutoSwitch autoswitch = new AutoSwitch();
@@ -77,6 +77,7 @@ public class Robot extends IterativeRobot {
 		//Set the mode we're going to run in Autonomous...
 		// Normally we'd read this from the mechanical switch
 		autoMode = Robot.autoswitch.getMode();
+		
 		
 		// (left speed, right speed, time)
 		// Ok, see which position the switch is in

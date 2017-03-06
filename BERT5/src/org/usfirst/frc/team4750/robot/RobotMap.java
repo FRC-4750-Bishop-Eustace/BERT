@@ -26,7 +26,7 @@ public class RobotMap {
 	public static final double SHOOTER_MOTOR_SPEED = 1;
 	public static final double INTAKE_MOTOR_SPEED = -1;
 	public static final double LIFTER_MOTOR_SPEED = 1; 
-	public static final double AGITATOR_MOTOR_SPEED = .4;
+	public static final double AGITATOR_MOTOR_SPEED = -.4;
 
 	// Selector switch, DIO
 	public static final int SELECTOR_HIGH_DIO = 1;  // (On switch, closest to the middle)
@@ -44,12 +44,12 @@ public class RobotMap {
 	public static final int CURRCAMERA = 3;
 	
 	//Analog Sensors
-	public static final int GEAR_SENSOR = 0;
+	public static final int GEAR_SENSOR = 1;
 	public static final int RANGE_SENSOR = 1;
 	
 	//Digital Sensors
 	public static final int PEG_SENSOR = 0;
-	public static final int SECOND_PEG_SENSOR = 1;
+	public static final int SECOND_PEG_SENSOR = 4;
 	
 	//Digital Output
 	public static final int PEG_STATUS_LIGHT = 4; 

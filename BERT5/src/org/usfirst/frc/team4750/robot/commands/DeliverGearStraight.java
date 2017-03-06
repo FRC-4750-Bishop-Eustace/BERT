@@ -9,4 +9,8 @@ public class DeliverGearStraight extends CommandGroup {
 		addSequential(new WaitForGear());
 	}
 
+	
+	public void initialize() {
+		System.out.println("Executing DeliverGearStraight!!!");
+	}
 }

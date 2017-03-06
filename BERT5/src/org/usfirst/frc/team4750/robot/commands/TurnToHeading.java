@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * @author mkopack
  * Use this to perform a controlled automatic turn to a given heading.
  * 
  * The basic idea here is to take in an amount to turn in degrees.
@@ -39,19 +38,19 @@ public class TurnToHeading extends Command {
 	
 	@Override
 	protected void initialize() {
+		System.out.println("Executing TurnToHeading..."+offset);
 		SmartDashboard.putBoolean("TurnToHeading.IMUCalibrated", false);
 		//do a reset of the IMU here
 		try
 		{
-			SmartDashboard.putString("TurnToHeading.IMU Setup?", "Instantiating");
+			System.out.println("TurnToHeading.IMU Instantiating");
             /* Communicate w/navX-MXP via the I2C Bus.                                       */			
             ahrs = new AHRS(SerialPort.Port.kUSB);
             ahrs.reset();
-            SmartDashboard.putString("TurnToHeading.IMU Setup?", "Setup");
+            System.out.println("TurnToHeading.IMU Setup...");
             
         } catch (Exception ex ) {
             System.out.println("Error instantiating navX-MXP:  "+ex.getMessage());
-            SmartDashboard.putString("TurnToHeading.IMU Setup error", ex.getMessage());
     	}
 		
 		//read the IMU, store the value into startheading
@@ -71,6 +70,9 @@ public class TurnToHeading extends Command {
 			targetheading = 360+targetheading;
 		if(targetheading > 360)
 			targetheading = targetheading-360;
+		System.out.println("TurnToHeading.CurrentHeading"+ startheading);
+		System.out.println("TurnToHeading.TargetHeading"+ targetheading);
+		System.out.println("TurnToHeading.Offset"+ offset);
 		SmartDashboard.putNumber("TurnToHeading.CurrentHeading", startheading);
 		SmartDashboard.putNumber("TurnToHeading.TargetHeading", targetheading);
 		SmartDashboard.putNumber("TurnToHeading.Offset", offset);
@@ -144,6 +146,7 @@ public class TurnToHeading extends Command {
 		// if we're within 2 degrees of the target,
 		if (Math.abs(offset) <2.0) {
 			//close enough!
+			System.out.println("Done turning! Offset="+offset);
 			return true;
 		}
 		return false;

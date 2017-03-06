@@ -21,4 +21,7 @@ public class WaitForGear extends Command {
 		Robot.relay.relaySwitch(false);
 	}
 
+	public void initialize() {
+		System.out.println("Executing WaitForGear!!!");
+	}
 }

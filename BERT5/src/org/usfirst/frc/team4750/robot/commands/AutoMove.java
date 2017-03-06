@@ -29,7 +29,8 @@ public class AutoMove extends Command {
 
 	// Called just before this Command runs the first time
 	@Override
-	protected void initialize() {	
+	protected void initialize() {
+		System.out.println("Executing AutoMove...");
 		timer.start();
 		SmartDashboard.getNumber("Timer:", timer.get());
 
@@ -39,6 +40,7 @@ public class AutoMove extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		
 		Robot.driveTrain.setLeftDriveMotor(leftSpeed);
 		Robot.driveTrain.setRightDriveMotor(rightSpeed);
 		SmartDashboard.putBoolean("AutoMove.execute()", true);

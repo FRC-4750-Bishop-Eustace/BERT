@@ -16,4 +16,7 @@ public class DeliverGearLeft extends CommandGroup {
 		addSequential(new AutoMove(1, -1, 1f));
 	}
 
+	public void initialize() {
+		System.out.println("Executing DeliverGearLeft!!!");
+	}
 }

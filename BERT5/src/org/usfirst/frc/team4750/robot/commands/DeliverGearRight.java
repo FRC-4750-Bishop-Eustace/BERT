@@ -15,5 +15,7 @@ public class DeliverGearRight extends CommandGroup {
 		addSequential(new TurnToHeading(60f));
 		addSequential(new AutoMove(1, -1, 1f));
 	}
-
+	public void initialize() {
+		System.out.println("Executing DeliverGearRight!!!");
+	}
 }
