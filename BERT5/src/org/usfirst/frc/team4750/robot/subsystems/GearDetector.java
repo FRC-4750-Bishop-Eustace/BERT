@@ -10,6 +10,7 @@ public class GearDetector extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	
+	double x;// just a place holder till i run test to figure out the values
 	AnalogInput input = new AnalogInput(RobotMap.GEAR_SENSOR);
 
 	protected void initDefaultCommand() {
@@ -18,8 +19,16 @@ public class GearDetector extends Subsystem {
 		
 	}
 	
-	public void Output(){
+	public boolean Output(){
 		//Voltage increases as object gets closer
 		SmartDashboard.putNumber("Gear Detector", input.getVoltage());
+		
+		if(input.getVoltage() == x){
+			return true;
+		}
+		
+		
+		
+		return false;
 	}
 }

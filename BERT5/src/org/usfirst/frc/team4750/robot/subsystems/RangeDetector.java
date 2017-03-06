@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class RangeDetector extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
-	
+	int x; // this is just a placeholder till i do some test to figure out the values of the sensor.
 	AnalogInput input = new AnalogInput(RobotMap.RANGE_SENSOR);
 
 	protected void initDefaultCommand() {
@@ -18,8 +18,15 @@ public class RangeDetector extends Subsystem {
 		
 	}
 	
-	public void Output(){
+	public boolean Output(){
 		//Voltage increases as object gets closer
 		SmartDashboard.putNumber("Range Detector", input.getVoltage());
+		
+		if(input.getVoltage() == x){
+			return true;
+		}else if(input.getVoltage() == x){
+			return false;
+		}
+		return false;
 	}
 }

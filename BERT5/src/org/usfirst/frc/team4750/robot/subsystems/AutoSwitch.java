@@ -74,10 +74,10 @@ public class AutoSwitch extends Subsystem {
 			return AutoMode.MOVE_FORWARD;
 		}else if(switchpos == 2){
 			SmartDashboard.putNumber("AutoSwitch.Position", switchpos);
-			return AutoMode.DRIVE_FORWARD_AND_TURN;
+			return AutoMode.DRIVE_FORWARD_AND_TURN_RIGHT;
 		}else if(switchpos == 3){
 			SmartDashboard.putNumber("AutoSwitch.Position", switchpos);
-			return AutoMode.TURN_TO_HEADING;
+			return AutoMode.DRIVE_FORWARD_AND_TURN_LEFT;
 		}
 		
 		SmartDashboard.putBoolean("AutoSwitch.High",highval);

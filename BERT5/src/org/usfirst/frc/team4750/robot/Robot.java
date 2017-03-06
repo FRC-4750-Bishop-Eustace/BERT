@@ -69,22 +69,21 @@ public class Robot extends IterativeRobot {
 		//SmartDashboard.putData("Auto mode", chooser);
 		
 		//Set the mode we're going to run in Autonomous...
-		// Normally we'd read this from the mechanical switch
 		autoMode = Robot.autoswitch.getMode();
 		
-		// (left speed, right speed, time)
 		// Ok, see which position the switch is in
 		switch(autoMode){
 			case MOVE_FORWARD:
-				autonomousCommand = new AutoMove(+.5, -.5, .5f);
+				//(rightspeed, leftspeed, sec)
+				autonomousCommand = new AutoMove(+.3, -.3, 2.6);
 				break;
-				
-		// (driveSpeed, driveTime, turnSpeed, turnTime)
-			case DRIVE_FORWARD_AND_TURN:
-				autonomousCommand = new AutoDriveForwardAndTurn(+1.0, 1.0f, 90.0f);
+			case DRIVE_FORWARD_AND_TURN_RIGHT:
+				//(driveSpeed, time, turn)
+				autonomousCommand = new AutoDriveForwardAndTurn(.5, 2.0, -45.0f);
 				break;
-			case TURN_TO_HEADING:
-				autonomousCommand = new TurnToHeading(90.0f);
+			case DRIVE_FORWARD_AND_TURN_LEFT:
+				//(driveSpeed, time, turn)
+				autonomousCommand = new AutoDriveForwardAndTurn(.5, 2.0, 45.0f);
 				break;
 		}
 	}

@@ -132,7 +132,7 @@ public class TurnToHeading extends Command {
 		SmartDashboard.putNumber("TurnToHeading.Offset", offset);
 		SmartDashboard.putNumber("TurnToHeading.Speed", speed);
 		//System.out.println("TargetHeading:"+targetheading+"  Currentheading:"+lastheadingread+"   Offset:"+offset+"  Speed:"+speed);
-		Robot.driveTrain.setDriveMotors(speed, -1.0*speed);
+		Robot.driveTrain.setDriveMotors(speed, speed);
 	}
 	
 	/* (non-Javadoc)

@@ -11,6 +11,7 @@ public class PegDetector extends Subsystem {
 	// here. Call these from Commands.
 	
 	DigitalInput input = new DigitalInput(RobotMap.PEG_SENSOR);
+	DigitalInput input2 = new DigitalInput(RobotMap.SECOND_PEG_SENSOR);
 
 	protected void initDefaultCommand() {
 		// Set the default command for a subsystem here.
@@ -18,8 +19,15 @@ public class PegDetector extends Subsystem {
 		
 	}
 	
-	public void Output() {
+	public boolean Output() {
 		SmartDashboard.putBoolean("Peg Detector", !input.get());
+		SmartDashboard.putBoolean("Peg Detector2", !input.get());
+		if(!input.get() == false){
+			return false;
+		}else if(!input.get() == true){
+			return true;
+		}
+		return false;
 	}
 
 }
