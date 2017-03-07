@@ -25,7 +25,7 @@ public class TurnToHeading extends Command {
 	float targetheading;
 	float startheading;
 	float lastheadingread;
-	AHRS ahrs; // navX-MXP IMU
+	
 	
 	/**
 	 * Constructor.
@@ -33,36 +33,19 @@ public class TurnToHeading extends Command {
 	 * Negative numbers indicate a left turn, positive are a right turn.
 	 */
 	public TurnToHeading(float offset) {
+		requires(Robot.imu);
 		this.offset = offset;
 	}
 	
 	@Override
 	protected void initialize() {
 		System.out.println("Executing TurnToHeading..."+offset);
-		SmartDashboard.putBoolean("TurnToHeading.IMUCalibrated", false);
-		//do a reset of the IMU here
-		try
-		{
-			System.out.println("TurnToHeading.IMU Instantiating");
-            /* Communicate w/navX-MXP via the I2C Bus.                                       */			
-            ahrs = new AHRS(SerialPort.Port.kUSB);
-            ahrs.reset();
-            System.out.println("TurnToHeading.IMU Setup...");
-            
-        } catch (Exception ex ) {
-            System.out.println("Error instantiating navX-MXP:  "+ex.getMessage());
-    	}
+		Robot.imu.reset();
 		
-		//read the IMU, store the value into startheading
-		/*
-		while(ahrs.isCalibrating()) {
-			// do nothing, wait.
-		}
-		*/
-		// done calibrating..
 		SmartDashboard.putBoolean("TurnToHeading.IMUCalibrated", true);
-		// READ FROM IMU!!!
-		startheading = ahrs.getFusedHeading();
+		System.out.println("IMU calibrated");
+		// READ FROM IMU!!! Note, the heading returned here is absolute!!! Not relative.
+		startheading = Robot.imu.getHeading();
 		
 		targetheading = startheading + offset;
 		// handle the under/overflow conditions where we cross 360/0
@@ -83,7 +66,7 @@ public class TurnToHeading extends Command {
 	protected void execute() {
 		SmartDashboard.putString("TurnToHeading.IMU Setup?", "Running");
 		// read the current value from the IMU.
-		lastheadingread = ahrs.getFusedHeading(); // READ FROM IMU
+		lastheadingread = Robot.imu.getHeading(); // READ FROM IMU
 		
 		// find the difference between where we are now and where we're trying to get to
 		

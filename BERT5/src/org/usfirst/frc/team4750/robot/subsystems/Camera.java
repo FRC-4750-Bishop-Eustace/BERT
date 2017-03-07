@@ -142,6 +142,7 @@ public class Camera extends Subsystem  {
 		 * This is what gets called once the thread is going
 		 */
 		public void run() {
+			System.out.println("Video Thread Started...");
 			cvSink.setEnabled(true);
 			outputStream.setConnected(true);
 			// keep doing whatever's in the while until we're told to stop.
@@ -150,6 +151,7 @@ public class Camera extends Subsystem  {
 				cvSink.grabFrame(image);
 				outputStream.putFrame(image);
 			}
+			System.out.println("Video Thread Done...");
 		}		
 	}
 

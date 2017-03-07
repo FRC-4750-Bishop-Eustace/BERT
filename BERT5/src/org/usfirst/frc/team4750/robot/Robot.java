@@ -22,6 +22,7 @@ import org.usfirst.frc.team4750.robot.subsystems.Intake;
 import org.usfirst.frc.team4750.robot.subsystems.Lifter;
 import org.usfirst.frc.team4750.robot.subsystems.Shooter;
 import org.usfirst.frc.team4750.robot.subsystems.GearDetector;
+import org.usfirst.frc.team4750.robot.subsystems.IMU;
 import org.usfirst.frc.team4750.robot.subsystems.PegDetector;
 import org.usfirst.frc.team4750.robot.subsystems.PegIndicatorLight;
 import org.usfirst.frc.team4750.robot.subsystems.RangeDetector;
@@ -53,6 +54,7 @@ public class Robot extends IterativeRobot {
 	//public static final RangeDetector range = new RangeDetector();
 	public static final RelaySwitch relay = new RelaySwitch();
 	//public static final PegIndicatorLight peglight = new PegIndicatorLight();
+	public static final IMU imu = new IMU();
 
 	public static OI oi;
 	public static final AutoSwitch autoswitch = new AutoSwitch();
@@ -140,8 +142,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		// always start up the cameras
-		camera.init();
+
 		//autonomousCommand = chooser.getSelected();
 
 		/*
