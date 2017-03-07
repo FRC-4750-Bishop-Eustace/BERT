@@ -118,15 +118,15 @@ public class TurnToHeading extends Command {
 		
 		// the farther off the target we are, the higher we need to set the motors
 		// speed/1.0 = degreesofftarget/180;
-		float speed = offset/180.0f;
+		float speed = (offset/180.0f) *1.0f;
 
 		// note that there IS a minimum power setting or else we won't turn at all (motors will stall)
 		// so if we're commanding less than say .2, set it to .2 and then adjust the sign to match what it was.
-		if(Math.abs(speed) < .3) {
+		if(Math.abs(speed) < .25) {
 			if(speed<0)
-				speed=-0.3f;
+				speed=-0.25f;
 			else
-				speed=0.3f;
+				speed=0.25f;
 		}
 		// now tell it to turn!
 		SmartDashboard.putNumber("TurnToHeading.CurrentHeading", lastheadingread);
@@ -134,7 +134,7 @@ public class TurnToHeading extends Command {
 		SmartDashboard.putNumber("TurnToHeading.Offset", offset);
 		SmartDashboard.putNumber("TurnToHeading.Speed", speed);
 		//System.out.println("TargetHeading:"+targetheading+"  Currentheading:"+lastheadingread+"   Offset:"+offset+"  Speed:"+speed);
-		Robot.driveTrain.setDriveMotors(speed, -1.0*speed);
+		Robot.driveTrain.setDriveMotors(speed, speed);
 	}
 	
 	/* (non-Javadoc)

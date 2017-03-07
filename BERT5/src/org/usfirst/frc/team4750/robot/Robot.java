@@ -8,8 +8,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team4750.robot.commands.AutoMove;
-import org.usfirst.frc.team4750.robot.commands.DeliverGearLeft;
-import org.usfirst.frc.team4750.robot.commands.DeliverGearRight;
+import org.usfirst.frc.team4750.robot.commands.DeliverGearLeftSideBlue;
+import org.usfirst.frc.team4750.robot.commands.DeliverGearLeftSideRed;
+import org.usfirst.frc.team4750.robot.commands.DeliverGearRightSideBlue;
+import org.usfirst.frc.team4750.robot.commands.DeliverGearRightSideRed;
 import org.usfirst.frc.team4750.robot.commands.DeliverGearStraight;
 import org.usfirst.frc.team4750.robot.commands.TurnToHeading;
 import org.usfirst.frc.team4750.robot.subsystems.Agitator;
@@ -89,13 +91,22 @@ public class Robot extends IterativeRobot {
 				break;
 				
 			//Start left side
-			case DRIVE_FORWARD_AND_TURN_RIGHT:
-				autonomousCommand = new DeliverGearLeft();
+			case START_LEFT_SIDE_RED:
+				autonomousCommand = new DeliverGearLeftSideRed();
 				break;
 				
 			//start right side
-			case DRIVE_FORWARD_AND_TURN_LEFT:
-				autonomousCommand = new DeliverGearRight();
+			case START_RIGHT_SIDE_RED:
+				autonomousCommand = new DeliverGearRightSideRed();
+				break;
+				
+			//	
+			case START_RIGHT_SIDE_BLUE:
+				autonomousCommand = new DeliverGearRightSideBlue();
+				break;
+				
+			case START_LEFT_SIDE_BLUE:
+				autonomousCommand = new DeliverGearLeftSideBlue();
 				break;
 		}
 	}
