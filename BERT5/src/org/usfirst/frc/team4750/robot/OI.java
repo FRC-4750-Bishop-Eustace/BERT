@@ -3,7 +3,7 @@ package org.usfirst.frc.team4750.robot;
 import org.usfirst.frc.team4750.robot.commands.Lifting;
 import org.usfirst.frc.team4750.robot.commands.SetIntakeSpeed;
 import org.usfirst.frc.team4750.robot.commands.SetShooterSpeed;
-import org.usfirst.frc.team4750.robot.commands.SwitchingCamera;
+import org.usfirst.frc.team4750.robot.commands.SwitchCamera;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -32,6 +32,6 @@ public class OI {
 		shootButton.toggleWhenPressed(new SetShooterSpeed());
 		intakeButton.toggleWhenPressed(new SetIntakeSpeed());
 		lifterButton.whileHeld(new Lifting());
-		cameraButton.whenReleased(new SwitchingCamera());
+		cameraButton.whenReleased(new SwitchCamera());
 	}
 }

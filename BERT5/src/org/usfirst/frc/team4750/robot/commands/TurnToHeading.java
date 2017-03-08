@@ -26,6 +26,9 @@ public class TurnToHeading extends Command {
 	float startheading;
 	float lastheadingread;
 	
+	float displacement;
+	float difference;
+	
 	
 	/**
 	 * Constructor.
@@ -34,11 +37,21 @@ public class TurnToHeading extends Command {
 	 */
 	public TurnToHeading(float offset) {
 		requires(Robot.imu);
+		requires(Robot.driveTrain);
 		this.offset = offset;
 	}
 	
+	
 	@Override
 	protected void initialize() {
+		System.out.println("Executing TurnToHeading..."+offset);
+		Robot.imu.reset();
+		System.out.println("IMU Reset...");
+	}
+	
+	
+	//@Override
+	protected void oldinitialize() {
 		System.out.println("Executing TurnToHeading..."+offset);
 		Robot.imu.reset();
 		
@@ -61,9 +74,41 @@ public class TurnToHeading extends Command {
 		SmartDashboard.putNumber("TurnToHeading.Offset", offset);
 	}
 	
-	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+		displacement = Robot.imu.getHeading();
+		
+		// Displacement    Offset   Difference   Speed Direction
+		//    -30            -60       -30                Left
+		//     30            60         30                Right
+		//     62            60         -2                Left
+		//     -70           -60        10                Right
+		
+		/// offset - displacement
+		difference = offset-displacement;
+		
+		// the farther off the target we are, the higher we need to set the motors
+		// speed/1.0 = degreesofftarget/180;
+		float speed = (offset/180.0f) *1.0f;
+
+		// note that there IS a minimum power setting or else we won't turn at all (motors will stall)
+		// so if we're commanding less than say .25, set it to .25 and then adjust the sign to match what it was.
+		if(Math.abs(speed) < .25) {
+			if(speed<0)
+				speed=-0.25f;
+			else
+				speed=0.25f;
+		}
+		SmartDashboard.putNumber("TurnToHeading.Displacement", displacement);
+		SmartDashboard.putNumber("TurnToHeading.Offset", offset);
+		SmartDashboard.putNumber("TurnToHeading.Speed", speed);
+		Robot.driveTrain.setDriveMotors(speed, speed);
+	}
+	
+	// Called repeatedly when this Command is scheduled to run
+	//@Override
+	protected void oldexecute() {
+		
 		SmartDashboard.putString("TurnToHeading.IMU Setup?", "Running");
 		// read the current value from the IMU.
 		lastheadingread = Robot.imu.getHeading(); // READ FROM IMU
@@ -120,11 +165,25 @@ public class TurnToHeading extends Command {
 		Robot.driveTrain.setDriveMotors(speed, speed);
 	}
 	
+	
+	@Override
+	protected boolean isFinished() {
+		
+		// see if we're within 2 degrees of the target. That should be close enough.
+		if(Math.abs(difference)<2.0) {
+			// close enough!
+			return true;
+		}
+		return false;
+	}
+	
+	
+	
 	/* (non-Javadoc)
 	 * @see edu.wpi.first.wpilibj.command.Command#isFinished()
 	 */
-	@Override
-	protected boolean isFinished() {
+	//@Override
+	protected boolean oldisFinished() {
 		// TODO Auto-generated method stub
 		// if we're within 2 degrees of the target,
 		if (Math.abs(offset) <2.0) {
@@ -140,7 +199,8 @@ public class TurnToHeading extends Command {
 	protected void end() {
 		// let's stop
 		Robot.driveTrain.setDriveMotors(0.0, 0.0);
-		SmartDashboard.putString("TurnToHeading.IMU Setup?", "ENDED!!!");
+		SmartDashboard.putString("TurnToHeading.IMU", "ENDED!!!");
+		System.out.println("Done turning! Difference= "+difference);
 	}
 
 	// Called when another command which requires one or more of the same

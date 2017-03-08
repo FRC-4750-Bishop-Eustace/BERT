@@ -8,8 +8,7 @@ import org.usfirst.frc.team4750.robot.Robot;
  */
 public class GearOutput extends Command {
 	public GearOutput() {
-		// Use requires() here to declare subsystem dependencies
-		//requires(Robot.exampleSubsystem);
+
 		requires(Robot.gear);
 	}
 

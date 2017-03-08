@@ -52,8 +52,9 @@ public class Camera extends Subsystem  {
 	    
 	    camera1.setVideoMode(PixelFormat.kMJPEG, 320,240,15); // THIS IS THE LOGITECH CAMERA!!! USE FOR VISION! THIS GOES IN HUB!
 	    
-	    
 	    // Ok, now we need to set up the thread that Streams the video
+	    
+	    // NOTE, might not need this next line! Might be causing it to add an extra stream we don't need.
 	    CameraServer.getInstance().addCamera(currcamera);
 	    videothread = new VideoThread();
 	    videothread.start();
@@ -127,8 +128,20 @@ public class Camera extends Subsystem  {
 		    
 		}
 		
-		public void switchCam() {	
+		/**
+		 * Call this to switch to tell the streaming thread to switch to the new camera.
+		 */
+		public void oldswitchCam() {
 			cvSink = CameraServer.getInstance().getVideo(currcamera);
+		}
+		
+		/**
+		 * Call this to switch to tell the streaming thread to switch to the new camera.
+		 */
+		public void switchCam() {
+			setDone();
+			cvSink = CameraServer.getInstance().getVideo(currcamera);
+			start();
 		}
 		/**
 		 * Call this when you want the thread to stop.
@@ -152,6 +165,9 @@ public class Camera extends Subsystem  {
 				outputStream.putFrame(image);
 			}
 			System.out.println("Video Thread Done...");
+			// added this for testing...
+			cvSink.setEnabled(false);
+			outputStream.setConnected(false);
 		}		
 	}
 

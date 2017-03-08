@@ -6,15 +6,15 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class WaitForGear extends Command {
 	
-
 	public void execute(){
-		
+		// do nothing. Just waiting for the gear to be pulled.
 	}
 	
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-		return Robot.gear.Output();
+		// stop when there's no longer a gear, so invert the output.
+		return !Robot.gear.Output();
 	}
 	
 	public void end(){

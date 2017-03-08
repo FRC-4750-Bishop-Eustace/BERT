@@ -24,8 +24,6 @@ import org.usfirst.frc.team4750.robot.subsystems.Shooter;
 import org.usfirst.frc.team4750.robot.subsystems.GearDetector;
 import org.usfirst.frc.team4750.robot.subsystems.IMU;
 import org.usfirst.frc.team4750.robot.subsystems.PegDetector;
-import org.usfirst.frc.team4750.robot.subsystems.PegIndicatorLight;
-import org.usfirst.frc.team4750.robot.subsystems.RangeDetector;
 import org.usfirst.frc.team4750.robot.subsystems.RelaySwitch;
 
 /**
@@ -51,9 +49,7 @@ public class Robot extends IterativeRobot {
 	public static final Camera camera = new Camera();
 	public static final GearDetector gear = new GearDetector();
 	public static final PegDetector peg = new PegDetector();
-	//public static final RangeDetector range = new RangeDetector();
 	public static final RelaySwitch relay = new RelaySwitch();
-	//public static final PegIndicatorLight peglight = new PegIndicatorLight();
 	public static final IMU imu = new IMU();
 
 	public static OI oi;
@@ -74,16 +70,10 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		oi = new OI();
 		
-		//chooser.addDefault("Default Auto", new TurnToHeading(0));
-		// chooser.addObject("My Auto", new MyAutoCommand());
-		//SmartDashboard.putData("Auto mode", chooser);
-		
 		//Set the mode we're going to run in Autonomous...
 		// Normally we'd read this from the mechanical switch
 		autoMode = Robot.autoswitch.getMode();
 		
-		
-		// (left speed, right speed, time)
 		// Ok, see which position the switch is in
 		switch(autoMode){
 		
@@ -92,21 +82,22 @@ public class Robot extends IterativeRobot {
 				autonomousCommand = new DeliverGearStraight();
 				break;
 				
-			//Start left side
+			//Start left side on Red
 			case START_LEFT_SIDE_RED:
 				autonomousCommand = new DeliverGearLeftSideRed();
 				break;
 				
-			//start right side
+			//start right side on Red
 			case START_RIGHT_SIDE_RED:
 				autonomousCommand = new DeliverGearRightSideRed();
 				break;
 				
-			//	
+			//start right side on Blue
 			case START_RIGHT_SIDE_BLUE:
 				autonomousCommand = new DeliverGearRightSideBlue();
 				break;
 				
+			//start left side on Blue
 			case START_LEFT_SIDE_BLUE:
 				autonomousCommand = new DeliverGearLeftSideBlue();
 				break;
@@ -142,28 +133,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-
-		//autonomousCommand = chooser.getSelected();
-
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-
-		// read the command to run from the switch.
-		// commenting this out for now so we can test rotating with the IMU
-		
-		//autonomousCommand = autoswitch.getMode();
-				
-		
-		// schedule the autonomous command (example)
-		
+		// start running the autonomous command group that was created
 		SmartDashboard.putBoolean("Robot.autonomousInit()",true);
 		if (autonomousCommand != null)
 			autonomousCommand.start();
-
 	}
 
 	/**
@@ -187,8 +160,9 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		if (autonomousCommand != null)autonomousCommand.cancel();
-		// this makes it so the agitator starts running when the robot comes on
+		if (autonomousCommand != null)
+			autonomousCommand.cancel();
+
 	}
 
 	/**
@@ -197,9 +171,14 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		if(Robot.gear.Output() == true) Robot.relay.relaySwitch(false);
-		//Robot.range.Output();
-		if(Robot.peg.Output() == true) Robot.relay.relaySwitch(true);
+		
+		// if there's a peg AND we have a gear loaded, turn the LED ring ON, ready to retrieve.
+		if(Robot.peg.Output() == true && Robot.gear.Output()) 
+			Robot.relay.relaySwitch(true);
+		else {
+			// otherwise turn it off
+			Robot.relay.relaySwitch(false);
+		}
 	}
 
 	/**

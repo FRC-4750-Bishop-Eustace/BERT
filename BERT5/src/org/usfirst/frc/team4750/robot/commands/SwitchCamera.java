@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team4750.robot.Robot;
 
-public class SwitchingCamera extends Command {
+public class SwitchCamera extends Command {
 	boolean finished = false;
 	
-	public SwitchingCamera(){
+	public SwitchCamera(){
 		requires(Robot.camera);
 	}
 	

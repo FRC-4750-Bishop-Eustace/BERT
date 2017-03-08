@@ -23,11 +23,11 @@ public class IMU extends Subsystem {
 		//do a reset of the IMU here
 		try
 		{
-			System.out.println("TurnToHeading.IMU Instantiating");
+			System.out.println("IMU Instantiating");
             /* Communicate w/navX-MXP via the I2C Bus.                                       */			
             ahrs = new AHRS(SerialPort.Port.kUSB);
             ahrs.reset();
-            System.out.println("TurnToHeading.IMU Setup...");
+            System.out.println("IMU Setup...");
             
         } catch (Exception ex ) {
             System.out.println("Error instantiating navX-MXP:  "+ex.getMessage());
@@ -57,7 +57,8 @@ public class IMU extends Subsystem {
 	 * @return Relative heading since the last reset (which should be when the command was set.
 	 */
 	public float getHeading() {
-		return ahrs.getFusedHeading();
+		//return ahrs.getFusedHeading();
+		return ahrs.getYaw();
 	}
 
 }

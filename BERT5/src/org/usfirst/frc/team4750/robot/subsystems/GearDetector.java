@@ -19,12 +19,18 @@ public class GearDetector extends Subsystem {
 		
 	}
 	
+	/**
+	 * 
+	 * @return true if there's a gear loaded, false if there isn't.
+	 */
 	public boolean Output(){
 		//Voltage increases as object gets closer
-		SmartDashboard.putNumber("Gear Detector", input.getVoltage());
+		//SmartDashboard.putNumber("Gear Detector", input.getVoltage());
 		if(input.getVoltage() <= .04){
-			return true;
+			SmartDashboard.putBoolean("Gear Loaded", false);
+			return false;
 		}
-		return false;
+		SmartDashboard.putBoolean("Gear Loaded", true);
+		return true;
 	}
 }
