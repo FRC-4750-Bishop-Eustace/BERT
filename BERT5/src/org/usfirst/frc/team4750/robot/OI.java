@@ -24,14 +24,14 @@ public class OI {
 	Button shootButton = new JoystickButton(driveStick, 1);
 	Button intakeButton = new JoystickButton(driveStick, 2);
 	Button lifterButton = new JoystickButton(driveStick, 3);
-	Button cameraButton = new JoystickButton(driveStick, 4);
-	Button relayButton= new JoystickButton(driveStick, 5);
+	Button cameraButton = new JoystickButton(driveStick, 5);
+	//Button relayButton= new JoystickButton(driveStick, 5);
 		
 	public OI(){		
 		//where the commands for the buttons are placed
 		shootButton.toggleWhenPressed(new SetShooterSpeed());
 		intakeButton.toggleWhenPressed(new SetIntakeSpeed());
 		lifterButton.whileHeld(new Lifting());
-		cameraButton.whenReleased(new SwitchCamera());
+		//cameraButton.whenReleased(new SwitchCamera());
 	}
 }

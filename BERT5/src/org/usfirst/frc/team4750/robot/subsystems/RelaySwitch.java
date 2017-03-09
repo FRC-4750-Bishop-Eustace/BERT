@@ -27,7 +27,7 @@ public class RelaySwitch extends Subsystem {
 	 * @param onOff true to turn it on, false to turn it off
 	 */
 	public void relaySwitch(boolean onOff) {
-		SmartDashboard.putBoolean("LED Ring is:", lightOn);
+		SmartDashboard.putBoolean("LED Ring is:", onOff);
 		
 		if (onOff) {
 			//Tells relay to turn on

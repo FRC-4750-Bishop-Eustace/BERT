@@ -26,7 +26,7 @@ public class RobotMap {
 	public static final double SHOOTER_MOTOR_SPEED = 1;
 	public static final double INTAKE_MOTOR_SPEED = -1;
 	public static final double LIFTER_MOTOR_SPEED = 1; 
-	public static final double AGITATOR_MOTOR_SPEED = -.4;
+	public static final double AGITATOR_MOTOR_SPEED = -.6;
 
 	// Selector switch, DIO
 	public static final int SELECTOR_HIGH_DIO = 1;  // (On switch, closest to the middle)
