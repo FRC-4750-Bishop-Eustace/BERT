@@ -15,11 +15,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Camera extends Subsystem  {
 	//defining cameras
 	UsbCamera camera1;
-	UsbCamera camera2;
-	UsbCamera currcamera;
+	//UsbCamera camera2;
+	//UsbCamera currcamera;
 	
 	boolean initialized = false;
-	
+	/*
 	// Let's us keep track of which camera # is active
 	int currcameranumber;
 	
@@ -29,17 +29,17 @@ public class Camera extends Subsystem  {
     Mat image = new Mat(); // holds the current frame
     
     VideoThread videothread;
-    
+    */
     /**
      * Constructor
      */
 	public Camera(){
 		camera1 = new UsbCamera("USB Camera 1", RobotMap.CAMERA2);
-		camera2 = new UsbCamera("USB Camera 2", RobotMap.CAMERA1);
+		//camera2 = new UsbCamera("USB Camera 2", RobotMap.CAMERA1);
 		
 		// start out with camera1 (which is the one used for CV anyhow
-		currcamera = camera1;
-		currcameranumber = 1;
+		//currcamera = camera1;
+		//currcameranumber = 1;
 		
 	}
 	
@@ -47,18 +47,7 @@ public class Camera extends Subsystem  {
 	 * Call this to get the cameras working after they've done their initial setup
 	 */
 	public void init() {
-		//setting up FPS and Resolution
-		camera2.setVideoMode(PixelFormat.kMJPEG, 160,120,10); // plug this one into the RoboRio, other one into the Hub.
-	    
-	    camera1.setVideoMode(PixelFormat.kMJPEG, 320,240,15); // THIS IS THE LOGITECH CAMERA!!! USE FOR VISION! THIS GOES IN HUB!
-	    
-	    // Ok, now we need to set up the thread that Streams the video
-	    
-	    // NOTE, might not need this next line! Might be causing it to add an extra stream we don't need.
-	    CameraServer.getInstance().addCamera(currcamera);
-	    videothread = new VideoThread();
-	    videothread.start();
-	    initialized=true;
+		CameraServer.getInstance().startAutomaticCapture(camera1);
 	}
 	
 	/**
@@ -73,7 +62,7 @@ public class Camera extends Subsystem  {
 	 * Changes between the available cameras with wrap around
 	 */
 	public void cycle(){
-		
+	/*	
 		
 		// increment to the next 
 		currcameranumber++;
@@ -96,6 +85,8 @@ public class Camera extends Subsystem  {
 			Robot.cameraposition=0;
 		if (Robot.cameraposition == 0) SmartDashboard.putString("CameraDirection", "Front");
 		if (Robot.cameraposition == 1) SmartDashboard.putString("CameraDirection", "Back");
+		
+		*/
 	}
 	
 	@Override
@@ -123,25 +114,28 @@ public class Camera extends Subsystem  {
 		 */
 		public VideoThread() {
 			// get the camera working
+			/*
 			cvSink = CameraServer.getInstance().getVideo(currcamera);
 			outputStream = CameraServer.getInstance().putVideo("Current View", 160, 120);
-		    
+		    */
 		}
 		
 		/**
 		 * Call this to switch to tell the streaming thread to switch to the new camera.
 		 */
 		public void oldswitchCam() {
-			cvSink = CameraServer.getInstance().getVideo(currcamera);
+			//cvSink = CameraServer.getInstance().getVideo(currcamera);
 		}
 		
 		/**
 		 * Call this to switch to tell the streaming thread to switch to the new camera.
 		 */
 		public void switchCam() {
+			/*
 			setDone();
 			cvSink = CameraServer.getInstance().getVideo(currcamera);
 			start();
+			*/
 		}
 		/**
 		 * Call this when you want the thread to stop.
@@ -155,6 +149,7 @@ public class Camera extends Subsystem  {
 		 * This is what gets called once the thread is going
 		 */
 		public void run() {
+			/*
 			System.out.println("Video Thread Started...");
 			cvSink.setEnabled(true);
 			outputStream.setConnected(true);
@@ -168,6 +163,7 @@ public class Camera extends Subsystem  {
 			// added this for testing...
 			cvSink.setEnabled(false);
 			outputStream.setConnected(false);
+			*/
 		}		
 	}
 
