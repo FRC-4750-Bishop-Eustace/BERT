@@ -8,12 +8,12 @@ public class DeliverGearLeftSideRed extends CommandGroup {
 	public DeliverGearLeftSideRed(){
 		//SmartDashboard.putBoolean("AutoDriveForwardAndTurn.AutoDriveForwardAndTurn()",true);
 		addSequential(new AutoMove(.3, -.3, 2.6f));
-		addSequential(new TurnToHeading(60f));
+		addSequential(new TurnToHeading(45f));
 		addSequential(new AutoMove(.3, -.3, 1.6f));
 		addSequential(new WaitForGear());
 		addSequential(new AutoMove(-.3, .3, .5f));
-		addSequential(new TurnToHeading(-60f));
-		addSequential(new AutoMove(1, -1, 1f));
+		addSequential(new TurnToHeading(-45f));
+		addSequential(new AutoMove(1, -1, .5f));
 	}
 
 	public void initialize() {

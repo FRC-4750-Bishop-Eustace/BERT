@@ -32,6 +32,6 @@ public class OI {
 		shootButton.toggleWhenPressed(new SetShooterSpeed());
 		intakeButton.toggleWhenPressed(new SetIntakeSpeed());
 		lifterButton.whileHeld(new Lifting());
-		//cameraButton.whenReleased(new SwitchCamera());
+		cameraButton.whenReleased(new SwitchCamera());
 	}
 }

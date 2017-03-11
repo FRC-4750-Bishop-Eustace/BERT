@@ -86,7 +86,7 @@ public class Camera extends Subsystem  {
 		}else if(currcameranumber == 2){
 			currcamera = camera2;
 		}
-		videothread.switchCam();
+		//videothread.switchCam();
 		
 		
 		// cycle the camera position (out of 4 stages) to change the drive angle
