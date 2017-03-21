@@ -21,7 +21,7 @@ public class OI {
 	
 	
 	//Joystick buttons
-	Button shootButton = new JoystickButton(driveStick, 1);
+	Button shootButton = new JoystickButton(driveStick, 7);
 	Button intakeButton = new JoystickButton(driveStick, 2);
 	Button lifterButton = new JoystickButton(driveStick, 3);
 	Button cameraButton = new JoystickButton(driveStick, 5);

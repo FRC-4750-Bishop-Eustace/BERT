@@ -62,7 +62,9 @@ public class AutoMove extends Command {
 	@Override
 	protected void end() {
 		SmartDashboard.putBoolean("AutoMove.end()", true);
-		Robot.driveTrain.setDriveMotors(0 , 0);
+		//Robot.driveTrain.setDriveMotors(-1 , -1);
+		//Timer.delay(0.01);
+		Robot.driveTrain.setDriveMotors(0, 0);
 		timer.stop();
 	}
 

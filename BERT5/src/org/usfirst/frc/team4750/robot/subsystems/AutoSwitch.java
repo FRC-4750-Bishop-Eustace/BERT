@@ -58,7 +58,7 @@ public class AutoSwitch extends Subsystem {
 		else if(highval && !midval && lowval) switchpos = 3;
 		else if(!highval && !midval && lowval) switchpos = 4;
 		else if(!highval && midval && lowval) switchpos = 5;
-		
+		else switchpos =1;
 		//Now that we know which position our switch is in, let's assign the proper autogroup to execute.
 		
 		/*
