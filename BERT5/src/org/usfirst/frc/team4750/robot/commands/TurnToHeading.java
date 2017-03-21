@@ -29,6 +29,8 @@ public class TurnToHeading extends Command {
 	float displacement;
 	float difference;
 	
+	boolean leftorRight;
+	
 	
 	/**
 	 * Constructor.
@@ -198,6 +200,11 @@ public class TurnToHeading extends Command {
 	@Override
 	protected void end() {
 		// let's stop
+		if(leftorRight == true){
+			Robot.driveTrain.setDriveMotors(.25, .25);
+		}else if(leftorRight == false){
+			Robot.driveTrain.setDriveMotors(.25, .25);
+		}
 		Robot.driveTrain.setDriveMotors(0.0, 0.0);
 		SmartDashboard.putString("TurnToHeading.IMU", "ENDED!!!");
 		System.out.println("Done turning! Difference= "+difference);

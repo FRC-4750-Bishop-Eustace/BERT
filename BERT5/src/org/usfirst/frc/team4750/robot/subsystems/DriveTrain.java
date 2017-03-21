@@ -61,4 +61,11 @@ public class DriveTrain extends Subsystem {
 		setLeftDriveMotor(leftspeed);
 		setRightDriveMotor(rightspeed);
 	}
+	public void driveSideways(double speed){
+		f_rightMotor.set(speed);
+		b_leftMotor.set(speed);
+		
+		f_leftMotor.set(-speed);
+		b_rightMotor.set(-speed);
+	}
 }

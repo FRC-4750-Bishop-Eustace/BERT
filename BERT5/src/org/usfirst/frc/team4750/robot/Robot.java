@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4750.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -22,6 +24,7 @@ import org.usfirst.frc.team4750.robot.subsystems.Intake;
 import org.usfirst.frc.team4750.robot.subsystems.Lifter;
 import org.usfirst.frc.team4750.robot.subsystems.Shooter;
 import org.usfirst.frc.team4750.robot.subsystems.GearDetector;
+import org.usfirst.frc.team4750.robot.subsystems.GripPipeline;
 import org.usfirst.frc.team4750.robot.subsystems.IMU;
 import org.usfirst.frc.team4750.robot.subsystems.PegDetector;
 import org.usfirst.frc.team4750.robot.subsystems.RelaySwitch;
@@ -46,7 +49,7 @@ public class Robot extends IterativeRobot {
 	public static final Intake intake = new Intake();
 	public static final Agitator agitator = new Agitator();
 	public static final Lifter lifter = new Lifter();
-	public static final Camera camera = new Camera();
+	//public static final Camera camera = new Camera();
 	public static final GearDetector gear = new GearDetector();
 	public static final PegDetector peg = new PegDetector();
 	public static final RelaySwitch relay = new RelaySwitch();
@@ -62,6 +65,9 @@ public class Robot extends IterativeRobot {
 	
 	AutoMode autoMode;
 	
+	public static UsbCamera camera;
+	public static GripPipeline vision;
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -69,6 +75,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
+		
+		//sets up camera
+		camera = CameraServer.getInstance().startAutomaticCapture();
+		camera.setResolution(640, 480);
+		vision = new GripPipeline();
 		
 		//Set the mode we're going to run in Autonomous...
 		// Normally we'd read this from the mechanical switch
@@ -153,8 +164,8 @@ public class Robot extends IterativeRobot {
 		
 		// if we didn't previously initialize (because in testing we skipped the autonomous mode)
 		// go ahead and initialize it now.
-		if(!camera.isInitialized())
-			camera.init();
+		//if(!camera.isInitialized())
+			//camera.init();
 		
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to

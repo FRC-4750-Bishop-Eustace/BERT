@@ -27,16 +27,17 @@ public class PegDetector extends Subsystem {
 		SmartDashboard.putBoolean("Peg Detector3", !input3.get());
 		
 		// if none of the sensors trip, turn the ring off
-		if(!input.get() == false && !input2.get() == false && !input3.get()==false) {
+		if(!input.get() || !input2.get() || !input3.get()) {
 		//if(!input.get() == false && !input2.get() == false){
-			Robot.relay.relaySwitch(false);
-			SmartDashboard.putBoolean("PEG Detected", false);
-			return false;
-		}else{
-			// at least 1 tripped so turn the light on
 			Robot.relay.relaySwitch(true);
 			SmartDashboard.putBoolean("PEG Detected", true);
 			return true;
+			
+		}else{
+			// at least 1 tripped so turn the light on
+			Robot.relay.relaySwitch(false);
+			SmartDashboard.putBoolean("PEG Detected", false);
+			return false;
 		}
 	}
 
