@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4750.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -22,6 +24,7 @@ import org.usfirst.frc.team4750.robot.subsystems.Intake;
 import org.usfirst.frc.team4750.robot.subsystems.Lifter;
 import org.usfirst.frc.team4750.robot.subsystems.Shooter;
 import org.usfirst.frc.team4750.robot.subsystems.GearDetector;
+import org.usfirst.frc.team4750.robot.subsystems.GripPipeline;
 import org.usfirst.frc.team4750.robot.subsystems.IMU;
 import org.usfirst.frc.team4750.robot.subsystems.PegDetector;
 import org.usfirst.frc.team4750.robot.subsystems.RelaySwitch;
@@ -60,6 +63,9 @@ public class Robot extends IterativeRobot {
 
 	public static int cameraposition = 0;
 	
+	public static UsbCamera camera2;
+	public static GripPipeline vision;
+	
 	AutoMode autoMode;
 	
 	/**
@@ -69,6 +75,10 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
+		
+		camera2 = CameraServer.getInstance().startAutomaticCapture();
+		camera2.setResolution(640, 480);
+		vision = new GripPipeline();
 		
 		//Set the mode we're going to run in Autonomous...
 		// Normally we'd read this from the mechanical switch

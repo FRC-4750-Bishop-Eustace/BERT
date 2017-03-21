@@ -20,6 +20,7 @@ public class RobotMap {
 	public static final int INTAKE_MOTOR = 5;
 	public static final int SHOOTER_MOTOR = 6;
 	public static final int AGITATOR_MOTOR = 7;
+	public static final int AGITATOR_MOTOR2 = 8;
 	
 	
 	//Motor Speeds; + is forward - is backwards; adjust speeds here and only here, everything else will follow
@@ -27,6 +28,7 @@ public class RobotMap {
 	public static final double INTAKE_MOTOR_SPEED = -1;
 	public static final double LIFTER_MOTOR_SPEED = 1; 
 	public static final double AGITATOR_MOTOR_SPEED = -.6;
+	public static final double AGITATOR_MOTOR_SPEED2 = -.6;
 
 	// Selector switch, DIO
 	public static final int SELECTOR_HIGH_DIO = 1;  // (On switch, closest to the middle)
@@ -51,5 +53,8 @@ public class RobotMap {
 	public static final int PEG_SENSOR = 0;
 	public static final int SECOND_PEG_SENSOR = 4;
 	public static final int THIRD_PEG_SENSOR = 5;
+
+
+	
 
 }

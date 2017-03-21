@@ -15,13 +15,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Camera extends Subsystem  {
 	//defining cameras
 	UsbCamera camera1;
-	UsbCamera camera2;
-	UsbCamera currcamera;
+	//UsbCamera camera2;
+	//UsbCamera currcamera;
 	
 	boolean initialized = false;
 	
 	// Let's us keep track of which camera # is active
-	int currcameranumber;
+	//int currcameranumber;
 	
 	CvSink cvSink; // pulls the frame from the camera
     CvSource outputStream; // pushes the frame to the dashboard
@@ -35,11 +35,11 @@ public class Camera extends Subsystem  {
      */
 	public Camera(){
 		camera1 = new UsbCamera("USB Camera 1", RobotMap.CAMERA2);
-		camera2 = new UsbCamera("USB Camera 2", RobotMap.CAMERA1);
+		//camera2 = new UsbCamera("USB Camera 2", RobotMap.CAMERA1);
 		
 		// start out with camera1 (which is the one used for CV anyhow
-		currcamera = camera1;
-		currcameranumber = 1;
+		//currcamera = camera1;
+		//currcameranumber = 1;
 		
 	}
 	
@@ -48,14 +48,14 @@ public class Camera extends Subsystem  {
 	 */
 	public void init() {
 		//setting up FPS and Resolution
-		camera2.setVideoMode(PixelFormat.kMJPEG, 160,120,10); // plug this one into the RoboRio, other one into the Hub.
+		//camera2.setVideoMode(PixelFormat.kMJPEG, 160,120,10); // plug this one into the RoboRio, other one into the Hub.
 	    
 	    camera1.setVideoMode(PixelFormat.kMJPEG, 320,240,15); // THIS IS THE LOGITECH CAMERA!!! USE FOR VISION! THIS GOES IN HUB!
 	    
 	    // Ok, now we need to set up the thread that Streams the video
 	    
 	    // NOTE, might not need this next line! Might be causing it to add an extra stream we don't need.
-	    CameraServer.getInstance().addCamera(currcamera);
+	    CameraServer.getInstance().addCamera(camera1);
 	    videothread = new VideoThread();
 	    videothread.start();
 	    initialized=true;
@@ -76,16 +76,16 @@ public class Camera extends Subsystem  {
 		
 		
 		// increment to the next 
-		currcameranumber++;
-		if(currcameranumber>2) 
-			currcameranumber = 1;
+		//currcameranumber++;
+		//if(currcameranumber>2) 
+			//currcameranumber = 1;
 		
 		// change currcamera to point to the newly active camera.
-		if(currcameranumber == 1){
-			currcamera = camera1;
-		}else if(currcameranumber == 2){
-			currcamera = camera2;
-		}
+		//if(currcameranumber == 1){
+			//currcamera = camera1;
+		//}else if(currcameranumber == 2){
+			//currcamera = camera2;
+		//}
 		//videothread.switchCam();
 		
 		
@@ -123,7 +123,7 @@ public class Camera extends Subsystem  {
 		 */
 		public VideoThread() {
 			// get the camera working
-			cvSink = CameraServer.getInstance().getVideo(currcamera);
+			cvSink = CameraServer.getInstance().getVideo(camera1);
 			outputStream = CameraServer.getInstance().putVideo("Current View", 160, 120);
 		    
 		}
@@ -132,7 +132,7 @@ public class Camera extends Subsystem  {
 		 * Call this to switch to tell the streaming thread to switch to the new camera.
 		 */
 		public void oldswitchCam() {
-			cvSink = CameraServer.getInstance().getVideo(currcamera);
+			cvSink = CameraServer.getInstance().getVideo(camera1);
 		}
 		
 		/**
@@ -140,7 +140,7 @@ public class Camera extends Subsystem  {
 		 */
 		public void switchCam() {
 			setDone();
-			cvSink = CameraServer.getInstance().getVideo(currcamera);
+			cvSink = CameraServer.getInstance().getVideo(camera1);
 			start();
 		}
 		/**
