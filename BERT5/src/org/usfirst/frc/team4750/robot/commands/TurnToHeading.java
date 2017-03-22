@@ -172,7 +172,7 @@ public class TurnToHeading extends Command {
 	protected boolean isFinished() {
 		
 		// see if we're within 2 degrees of the target. That should be close enough.
-		if(Math.abs(difference)<2.0) {
+		if(Math.abs(difference)<3.0) {
 			// close enough!
 			return true;
 		}

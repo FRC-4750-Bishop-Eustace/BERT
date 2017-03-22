@@ -16,6 +16,7 @@ public class TriggerVision extends Command {
 
 	
 	public void execute() {
+		System.out.println("TriggerVision");
 		SmartDashboard.putDouble("Offset Angle", Robot.vision.getHeadingOffset());
 	}
 	/* (non-Javadoc)

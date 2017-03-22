@@ -77,7 +77,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		
 		//sets up camera
-		camera = CameraServer.getInstance().startAutomaticCapture();
+		camera = CameraServer.getInstance().startAutomaticCapture(0);
 		camera.setResolution(640, 480);
 		vision = new GripPipeline();
 		

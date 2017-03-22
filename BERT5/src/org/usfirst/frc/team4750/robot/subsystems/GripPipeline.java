@@ -2,8 +2,7 @@ package org.usfirst.frc.team4750.robot.subsystems;
 
 
 import java.awt.Rectangle;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -138,11 +137,11 @@ public class GripPipeline implements VisionPipeline {
 
 		// Step Filter_Contours0:
 		ArrayList<MatOfPoint> filterContoursContours = findContoursOutput;
-		double filterContoursMinArea = 200.0;
+		double filterContoursMinArea = 50.0;
 		double filterContoursMinPerimeter = 0.0;
-		double filterContoursMinWidth = 40.0;
+		double filterContoursMinWidth = 10.0;
 		double filterContoursMaxWidth = 1000.0;
-		double filterContoursMinHeight = 30.0;
+		double filterContoursMinHeight = 10.0;
 		double filterContoursMaxHeight = 1000.0;
 		double[] filterContoursSolidity = {12.900188323917138, 100};
 		double filterContoursMaxVertices = 1000000.0;
@@ -365,8 +364,8 @@ public class GripPipeline implements VisionPipeline {
 			System.out.println("Contour "+i+" found X="+bb.x+"  Width="+bb.width);
 			
 			//stores the x and width
-			Rectangle point = new Rectangle(bb.x, bb.y, bb.width, bb.height);
-			targets.add(point);
+			//Rectangle point = new Rectangle(bb.x, bb.y, bb.width, bb.height);
+			//targets.add(point);
 		}
 	}
 
