@@ -8,12 +8,12 @@ public class SwitchCamera extends Command {
 	boolean finished = false;
 	
 	public SwitchCamera(){
-		requires(Robot.camera);
+		//requires(Robot.camera);
 	}
 	
 	protected void execute(){
-		Robot.camera.cycle();
-		finished = true;
+		//Robot.camera.cycle();
+		//finished = true;
 	}
 	
 	@Override

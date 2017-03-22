@@ -58,6 +58,14 @@ public class GripPipeline implements VisionPipeline {
 	 * @return degrees left/right to turn to center the 2 targets up
 	 */
 	public float getHeadingOffset() {
+		System.out.println("getting heading offset with vision");
+		
+		try {
+			Thread.sleep(1000l);
+		} catch(Exception e) { ; }
+		
+		System.out.println("Grabing frame");
+		
 		float angle=0.0f;
 		
 		// we assume teh camera is already running
@@ -71,12 +79,15 @@ public class GripPipeline implements VisionPipeline {
 		// pass that to the process().
 		process(source);
 		// read the values that came back that are stored in filterContoursOutput
+		System.out.println("Frame processed");
+		
 		
 		int target1center;
 		int target2center;
 		int targetscenter;
 		
 		// make sure we have 2 or more targets..
+		System.out.println("Number of targets: "+ targets.size()); 
 		if(targets.size()>=2) {
 			target1center = (int) targets.get(0).getCenterX();
 			target2center = (int) targets.get(1).getCenterX();

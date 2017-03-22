@@ -14,6 +14,7 @@ public class SideSwipe extends Command {
 	public SideSwipe(){
 		requires(Robot.driveTrain);
 		cameracenter = 320;
+		timer = new Timer();
 	}
 
 	protected void initialize(){
