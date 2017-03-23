@@ -84,7 +84,7 @@ public class Camera extends Subsystem  {
 		if(currcameranumber == 1){
 			currcamera = camera1;
 		}else if(currcameranumber == 2){
-			currcamera = camera2;
+			currcamera = camera1;
 		}
 		//videothread.switchCam();
 		

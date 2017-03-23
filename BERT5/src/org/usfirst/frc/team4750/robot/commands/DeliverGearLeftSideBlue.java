@@ -10,10 +10,14 @@ public class DeliverGearLeftSideBlue extends CommandGroup {
 		addSequential(new AutoMove(.3, -.3, 2.15f));
 		addSequential(new TurnToHeading(48f));
 		addSequential(new AutoMove(.3, -.3, 1.7f));
-		addSequential(new WaitForGear());
+		addSequential(new WaitForGear());	
 		addSequential(new AutoMove(-.3, .3, .5f));
-		addSequential(new TurnToHeading(-48f));
-		addSequential(new AutoMove(1, -1, .5f));
+		//addSequential(new TurnToHeading(-48f));
+		addSequential(new TurnToHeading(100f));
+		addSequential(new AutoMove(.3,-.3,2.15f));
+		addSequential(new TurnToHeading(40f));
+		addSequential(new AutoShoot());
+		//addSequential(new AutoMove(1, -1, .5f));
 	}
 
 	public void initialize() {

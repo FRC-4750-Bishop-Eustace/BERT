@@ -23,7 +23,7 @@ public class RobotMap {
 	public static final int AGITATOR_MOTOR2 = 8;
 	
 	//Motor Speeds; + is forward - is backwards; adjust speeds here and only here, everything else will follow
-	public static final double SHOOTER_MOTOR_SPEED = .85;
+	public static final double SHOOTER_MOTOR_SPEED = 1;
 	public static final double INTAKE_MOTOR_SPEED = -1;
 	public static final double LIFTER_MOTOR_SPEED = 1; 
 	public static final double AGITATOR_MOTOR_SPEED = -.6;

@@ -12,7 +12,7 @@ public class SwitchCamera extends Command {
 	}
 	
 	protected void execute(){
-		//Robot.camera.cycle();
+		Robot.camera.cycle();
 		finished = true;
 	}
 	
