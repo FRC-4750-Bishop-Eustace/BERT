@@ -12,6 +12,7 @@ public class SetShooterSpeed extends Command {
 		// sets the shooter speed as per RobotMap
 		Robot.shooter.setShooterSpeed(RobotMap.SHOOTER_MOTOR_SPEED);
 		Robot.agitator.setAgitatorSpeed(RobotMap.AGITATOR_MOTOR_SPEED);
+		Robot.agitator.setAgitator2Speed(RobotMap.AGITATOR2_MOTOR_SPEED);
 		// used for debugging
 		SmartDashboard.putBoolean("is SetShooterSpeed running?" , true);
 	}
@@ -26,6 +27,7 @@ public class SetShooterSpeed extends Command {
 		// so it stops when it is over
 		Robot.shooter.setShooterSpeed(0);
 		Robot.agitator.setAgitatorSpeed(0);
+		Robot.agitator.setAgitator2Speed(0);
 	}
 
 }
