@@ -13,13 +13,13 @@ public class DeliverGearLeftSideBlue extends CommandGroup {
 		addSequential(new WaitForGear());	
 		addSequential(new AutoMove(-.3, .3, .5f));// (speed,speed,time)
 		
-		addSequential(new TurnToHeading(100f));// turning for shooting
-		addSequential(new AutoMove(.3,-.3,2.45f));// (speed,speed,time)
-		addSequential(new TurnToHeading(45f));// line up shot
-		addSequential(new AutoShoot());// shoots balls
+		//addSequential(new TurnToHeading(100f));// turning for shooting
+		//addSequential(new AutoMove(.3,-.3,2.45f));// (speed,speed,time)
+		//addSequential(new TurnToHeading(45f));// line up shot
+		//addSequential(new AutoShoot());// shoots balls
 		
-		addSequential(new TurnToHeading(-48f));
-		addSequential(new AutoMove(1, -1, .56f));
+		addSequential(new TurnToHeading(-45.5f));
+		addSequential(new AutoMove(1, -.9, .7f));
 		
 		}
 

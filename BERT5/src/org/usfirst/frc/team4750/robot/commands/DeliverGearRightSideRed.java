@@ -13,13 +13,13 @@ public class DeliverGearRightSideRed extends CommandGroup {
 		addSequential(new WaitForGear());
 		addSequential(new AutoMove(-.3, .3, .5f));// (speed,speed,time)
 		
-		addSequential(new TurnToHeading(100f));//turn for shooting
-		addSequential(new AutoMove(.3,-.3,2.15f));// (speed,speed,time)
-		addSequential(new TurnToHeading(40f));//adjustment for shooting
-		addSequential(new AutoShoot());// shoots balls
+		//addSequential(new TurnToHeading(100f));//turn for shooting
+		//addSequential(new AutoMove(.3,-.3,2.15f));// (speed,speed,time)
+		//addSequential(new TurnToHeading(40f));//adjustment for shooting
+		//addSequential(new AutoShoot());// shoots balls
 		
-		//addSequential(new TurnToHeading(48f));//turn back, make the same as above
-		//addSequential(new AutoMove(1, -1, .56f));// (speed,speed,time)
+		addSequential(new TurnToHeading(45.5f));//turn back, make the same as above
+		addSequential(new AutoMove(.9, -1, .7f));// (speed,speed,time)
 	}
 	public void initialize() {
 		System.out.println("Executing DeliverGearRightSideRed!!!");

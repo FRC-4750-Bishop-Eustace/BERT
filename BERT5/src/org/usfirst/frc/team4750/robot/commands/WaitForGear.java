@@ -2,6 +2,7 @@ package org.usfirst.frc.team4750.robot.commands;
 
 import org.usfirst.frc.team4750.robot.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class WaitForGear extends Command {
@@ -18,6 +19,9 @@ public class WaitForGear extends Command {
 	}
 	
 	public void end(){
+		Robot.driveTrain.setDriveMotors(.3, -.3);
+		Timer.delay(.5);
+		Robot.driveTrain.setDriveMotors(0, 0);
 		Robot.relay.relaySwitch(false);
 	}
 
