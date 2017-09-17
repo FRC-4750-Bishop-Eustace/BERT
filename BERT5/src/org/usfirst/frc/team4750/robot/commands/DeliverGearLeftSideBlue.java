@@ -10,6 +10,7 @@ public class DeliverGearLeftSideBlue extends CommandGroup {
 		addSequential(new OpenServo()); // Opens servo
 		addSequential(new AutoMove(.3, -.3, 2.1f)); // (speed,speed,time)
 		addSequential(new TurnToHeading(45.5f)); // Angle of turn
+		addSequential(new TrackGear()); // Tracks gear peg
 		addSequential(new AutoMove(.3, -.3, 1.6f)); // (speed,speed,time)
 		addSequential(new WaitForGear()); // Waits for gear
 		addSequential(new AutoMove(-.3, .3, .5f)); // (speed,speed,time)
