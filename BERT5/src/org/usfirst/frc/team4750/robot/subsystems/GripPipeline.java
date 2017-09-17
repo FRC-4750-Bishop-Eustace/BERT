@@ -1,27 +1,10 @@
 package org.usfirst.frc.team4750.robot.subsystems;
 
-
-import java.awt.Rectangle;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.HashMap;
-
-import edu.wpi.cscore.CvSink;
-import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.vision.VisionPipeline;
 
 import org.opencv.core.*;
-import org.opencv.core.Core.*;
-import org.opencv.features2d.FeatureDetector;
-import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.*;
-import org.opencv.objdetect.*;
 
 /**
 * GripPipeline class.
@@ -30,120 +13,50 @@ import org.opencv.objdetect.*;
 *
 * @author GRIP
 */
-public class GripPipeline implements VisionPipeline {
+public class GripPipeline {
 
 	//Outputs
-	private Mat hslThreshold0Output = new Mat();
-	private Mat hslThreshold1Output = new Mat();
-	private Mat cvSubtractOutput = new Mat();
-	private Mat blurOutput = new Mat();
+	private Mat resizeImageOutput = new Mat();
+	private Mat hslThresholdOutput = new Mat();
 	private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
 	private ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
-	
-	public ArrayList<Rectangle> targets = new ArrayList<Rectangle>();
-	public int peg;
 
 	static {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-	}
-	
-	
-	public GripPipeline() {
-		
-	}
-	
-	/**
-	 * This assumes the camera is already up and streaming. We will snag a frame from it and try to process it.
-	 * @return degrees left/right to turn to center the 2 targets up
-	 */
-	public float getHeadingOffset() {
-		System.out.println("getting heading offset with vision");
-		
-		try {
-			Thread.sleep(1000l);
-		} catch(Exception e) { ; }
-		
-		System.out.println("Grabing frame");
-		
-		float angle=0.0f;
-		
-		// we assume teh camera is already running
-		
-		// set up a cV sink to pull a frame from it.
-		CvSink cvSink = CameraServer.getInstance().getVideo();
-		Mat source = new Mat();
-        cvSink.grabFrame(source);
-        System.out.println("Camera Width: "+ source.width());
-        System.out.println("Snapped a frame..");
-		// pass that to the process().
-		process(source);
-		// read the values that came back that are stored in filterContoursOutput
-		System.out.println("Frame processed");
-		
-		
-		int target1center;
-		int target2center;
-		int targetscenter;
-		
-		// make sure we have 2 or more targets..
-		System.out.println("Number of targets: "+ targets.size()); 
-		if(targets.size()>=2) {
-			target1center = (int) targets.get(0).getCenterX();
-			target2center = (int) targets.get(1).getCenterX();
-			targetscenter = (target1center+target2center)/2;
-			System.out.println("Targets center is: "+targetscenter);
-		}
-			
-		
-		targetscenter = peg;
-		
-		
-		return angle;
 	}
 
 	/**
 	 * This is the primary method that runs the entire pipeline and updates the outputs.
 	 */
-	@Override	public void process(Mat source0) {
+	public void process(Mat source0) {
+		// Step Resize_Image0:
+		Mat resizeImageInput = source0;
+		double resizeImageWidth = 640.0;
+		double resizeImageHeight = 480.0;
+		int resizeImageInterpolation = Imgproc.INTER_CUBIC;
+		resizeImage(resizeImageInput, resizeImageWidth, resizeImageHeight, resizeImageInterpolation, resizeImageOutput);
+
 		// Step HSL_Threshold0:
-		Mat hslThreshold0Input = source0;
-		double[] hslThreshold0Hue = {76.19536011350418, 96.10627428380742};
-		double[] hslThreshold0Saturation = {173.6830435932247, 254.62161014612607};
-		double[] hslThreshold0Luminance = {169.27966101694915, 254.50065202447817};
-		hslThreshold(hslThreshold0Input, hslThreshold0Hue, hslThreshold0Saturation, hslThreshold0Luminance, hslThreshold0Output);
-
-		// Step HSL_Threshold1:
-		Mat hslThreshold1Input = source0;
-		double[] hslThreshold1Hue = {0.0, 30.000000000000014};
-		double[] hslThreshold1Saturation = {201.08806810081768, 255.0};
-		double[] hslThreshold1Luminance = {118.85593220338983, 255.0};
-		hslThreshold(hslThreshold1Input, hslThreshold1Hue, hslThreshold1Saturation, hslThreshold1Luminance, hslThreshold1Output);
-
-		// Step CV_subtract0:
-		Mat cvSubtractSrc1 = hslThreshold0Output;
-		Mat cvSubtractSrc2 = hslThreshold1Output;
-		cvSubtract(cvSubtractSrc1, cvSubtractSrc2, cvSubtractOutput);
-
-		// Step Blur0:
-		Mat blurInput = cvSubtractOutput;
-		BlurType blurType = BlurType.get("Median Filter");
-		double blurRadius = 10.058643549209586;
-		blur(blurInput, blurType, blurRadius, blurOutput);
+		Mat hslThresholdInput = resizeImageOutput;
+		double[] hslThresholdHue = {38.84892086330935, 98.3059261557555};
+		double[] hslThresholdSaturation = {36.954348510643435, 255.0};
+		double[] hslThresholdLuminance = {80.26079136690647, 255.0};
+		hslThreshold(hslThresholdInput, hslThresholdHue, hslThresholdSaturation, hslThresholdLuminance, hslThresholdOutput);
 
 		// Step Find_Contours0:
-		Mat findContoursInput = blurOutput;
+		Mat findContoursInput = hslThresholdOutput;
 		boolean findContoursExternalOnly = false;
 		findContours(findContoursInput, findContoursExternalOnly, findContoursOutput);
 
 		// Step Filter_Contours0:
 		ArrayList<MatOfPoint> filterContoursContours = findContoursOutput;
-		double filterContoursMinArea = 50.0;
+		double filterContoursMinArea = 200.0;
 		double filterContoursMinPerimeter = 0.0;
-		double filterContoursMinWidth = 10.0;
+		double filterContoursMinWidth = 0.0;
 		double filterContoursMaxWidth = 1000.0;
-		double filterContoursMinHeight = 10.0;
+		double filterContoursMinHeight = 0.0;
 		double filterContoursMaxHeight = 1000.0;
-		double[] filterContoursSolidity = {12.900188323917138, 100};
+		double[] filterContoursSolidity = {0, 100};
 		double filterContoursMaxVertices = 1000000.0;
 		double filterContoursMinVertices = 0.0;
 		double filterContoursMinRatio = 0.0;
@@ -153,35 +66,19 @@ public class GripPipeline implements VisionPipeline {
 	}
 
 	/**
-	 * This method is a generated getter for the output of a HSL_Threshold.
-	 * @return Mat output from HSL_Threshold.
+	 * This method is a generated getter for the output of a Resize_Image.
+	 * @return Mat output from Resize_Image.
 	 */
-	public Mat hslThreshold0Output() {
-		return hslThreshold0Output;
+	public Mat resizeImageOutput() {
+		return resizeImageOutput;
 	}
 
 	/**
 	 * This method is a generated getter for the output of a HSL_Threshold.
 	 * @return Mat output from HSL_Threshold.
 	 */
-	public Mat hslThreshold1Output() {
-		return hslThreshold1Output;
-	}
-
-	/**
-	 * This method is a generated getter for the output of a CV_subtract.
-	 * @return Mat output from CV_subtract.
-	 */
-	public Mat cvSubtractOutput() {
-		return cvSubtractOutput;
-	}
-
-	/**
-	 * This method is a generated getter for the output of a Blur.
-	 * @return Mat output from Blur.
-	 */
-	public Mat blurOutput() {
-		return blurOutput;
+	public Mat hslThresholdOutput() {
+		return hslThresholdOutput;
 	}
 
 	/**
@@ -202,6 +99,19 @@ public class GripPipeline implements VisionPipeline {
 
 
 	/**
+	 * Scales and image to an exact size.
+	 * @param input The image on which to perform the Resize.
+	 * @param width The width of the output in pixels.
+	 * @param height The height of the output in pixels.
+	 * @param interpolation The type of interpolation.
+	 * @param output The image in which to store the output.
+	 */
+	private void resizeImage(Mat input, double width, double height,
+		int interpolation, Mat output) {
+		Imgproc.resize(input, output, new Size(width, height), 0.0, 0.0, interpolation);
+	}
+
+	/**
 	 * Segment an image based on hue, saturation, and luminance ranges.
 	 *
 	 * @param input The image on which to perform the HSL threshold.
@@ -215,81 +125,6 @@ public class GripPipeline implements VisionPipeline {
 		Imgproc.cvtColor(input, out, Imgproc.COLOR_BGR2HLS);
 		Core.inRange(out, new Scalar(hue[0], lum[0], sat[0]),
 			new Scalar(hue[1], lum[1], sat[1]), out);
-	}
-
-	/**
-	 * Subtracts the second Mat from the first.
-	 * @param src1 the first Mat
-	 * @param src2 the second Mat
-	 * @param out the Mat that is the subtraction of the two Mats
-	 */
-	private void cvSubtract(Mat src1, Mat src2, Mat out) {
-		Core.subtract(src1, src2, out);
-	}
-
-	/**
-	 * An indication of which type of filter to use for a blur.
-	 * Choices are BOX, GAUSSIAN, MEDIAN, and BILATERAL
-	 */
-	enum BlurType{
-		BOX("Box Blur"), GAUSSIAN("Gaussian Blur"), MEDIAN("Median Filter"),
-			BILATERAL("Bilateral Filter");
-
-		private final String label;
-
-		BlurType(String label) {
-			this.label = label;
-		}
-
-		public static BlurType get(String type) {
-			if (BILATERAL.label.equals(type)) {
-				return BILATERAL;
-			}
-			else if (GAUSSIAN.label.equals(type)) {
-			return GAUSSIAN;
-			}
-			else if (MEDIAN.label.equals(type)) {
-				return MEDIAN;
-			}
-			else {
-				return BOX;
-			}
-		}
-
-		@Override
-		public String toString() {
-			return this.label;
-		}
-	}
-
-	/**
-	 * Softens an image using one of several filters.
-	 * @param input The image on which to perform the blur.
-	 * @param type The blurType to perform.
-	 * @param doubleRadius The radius for the blur.
-	 * @param output The image in which to store the output.
-	 */
-	private void blur(Mat input, BlurType type, double doubleRadius,
-		Mat output) {
-		int radius = (int)(doubleRadius + 0.5);
-		int kernelSize;
-		switch(type){
-			case BOX:
-				kernelSize = 2 * radius + 1;
-				Imgproc.blur(input, output, new Size(kernelSize, kernelSize));
-				break;
-			case GAUSSIAN:
-				kernelSize = 6 * radius + 1;
-				Imgproc.GaussianBlur(input,output, new Size(kernelSize, kernelSize), radius);
-				break;
-			case MEDIAN:
-				kernelSize = 2 * radius + 1;
-				Imgproc.medianBlur(input, output, kernelSize);
-				break;
-			case BILATERAL:
-				Imgproc.bilateralFilter(input, output, -1, radius, radius);
-				break;
-		}
 	}
 
 	/**
@@ -341,7 +176,6 @@ public class GripPipeline implements VisionPipeline {
 		for (int i = 0; i < inputContours.size(); i++) {
 			final MatOfPoint contour = inputContours.get(i);
 			final Rect bb = Imgproc.boundingRect(contour);
-			
 			if (bb.width < minWidth || bb.width > maxWidth) continue;
 			if (bb.height < minHeight || bb.height > maxHeight) continue;
 			final double area = Imgproc.contourArea(contour);
@@ -361,11 +195,6 @@ public class GripPipeline implements VisionPipeline {
 			final double ratio = bb.width / (double)bb.height;
 			if (ratio < minRatio || ratio > maxRatio) continue;
 			output.add(contour);
-			System.out.println("Contour "+i+" found X="+bb.x+"  Width="+bb.width);
-			
-			//stores the x and width
-			//Rectangle point = new Rectangle(bb.x, bb.y, bb.width, bb.height);
-			//targets.add(point);
 		}
 	}
 

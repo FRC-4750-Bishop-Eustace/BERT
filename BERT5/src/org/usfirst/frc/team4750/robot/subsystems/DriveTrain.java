@@ -40,6 +40,10 @@ public class DriveTrain extends Subsystem {
 		//we pass inputs that are cube so we have better control when we make fine adjustments.
 		robotDrive.mecanumDrive_Cartesian(i.getX(), i.getY(),i.getThrottle(), Robot.cameraposition*-180);
 	}
+	
+	public void visionDrive(double x) {
+		robotDrive.mecanumDrive_Cartesian(x, 0, 0, 0);
+	}
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here. Links Subsystem to Command.
