@@ -6,9 +6,9 @@ import org.usfirst.frc.team4750.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class Lifting extends Command {
-	
-	protected void execute(){
-		//this tells the robot to start lifting at the speed set at that var
+
+	protected void execute() {
+		// Sets motor speed from RobotMap
 		Robot.lifter.setLifterSpeed(RobotMap.LIFTER_MOTOR_SPEED);
 	}
 
@@ -18,8 +18,8 @@ public class Lifting extends Command {
 		return false;
 	}
 
-	protected void end(){
-		//this makes sure the lifter stops when it is ended
+	protected void end() {
+		// Sets motor speed to 0
 		Robot.lifter.setLifterSpeed(0);
 	}
 }

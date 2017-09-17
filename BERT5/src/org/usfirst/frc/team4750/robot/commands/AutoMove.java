@@ -10,27 +10,29 @@ import org.usfirst.frc.team4750.robot.Robot;
  *
  */
 public class AutoMove extends Command {
-	
+
+	// Creates timer, doubles, boolean
 	Timer timer;
 	double leftSpeed, rightSpeed, driveTime;
 	boolean peg;
-	
+
 	public AutoMove(double leftSpeed, double rightSpeed, double driveTime) {
 		requires(Robot.driveTrain);
+		// Sets leftSpeed, rightSpeed, and driveTime to input values
 		this.leftSpeed = leftSpeed;
 		this.rightSpeed = rightSpeed;
 		this.driveTime = driveTime;
 		timer = new Timer();
-		
-//		SmartDashboard.putBoolean("AutoMove.AutoMove()", true);
-		
+
+		// SmartDashboard.putBoolean("AutoMove.AutoMove()", true);
+
 	}
-	
 
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-		System.out.println("Executing AutoMove...");
+		// System.out.println("Executing AutoMove...");
+		// Starts timer
 		timer.start();
 		SmartDashboard.getNumber("Timer:", timer.get());
 
@@ -40,20 +42,22 @@ public class AutoMove extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		
+		// Sets motor speeds to inputed values
 		Robot.driveTrain.setLeftDriveMotor(leftSpeed);
 		Robot.driveTrain.setRightDriveMotor(rightSpeed);
 		SmartDashboard.putBoolean("AutoMove.execute()", true);
-		}
+	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
 		SmartDashboard.putBoolean("AutoMove.isFinished()", true);
-		if(timer.get() > driveTime || Robot.peg.Output() == true) {
+		// If timer is more than the inputed time or the peg is in the gear
+		if (timer.get() > driveTime || Robot.peg.Output() == true) {
+			// Turns relay switch (LED) on
 			Robot.relay.relaySwitch(true);
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
@@ -62,9 +66,11 @@ public class AutoMove extends Command {
 	@Override
 	protected void end() {
 		SmartDashboard.putBoolean("AutoMove.end()", true);
-		//Robot.driveTrain.setDriveMotors(-1 , -1);
-		//Timer.delay(0.01);
+		// Robot.driveTrain.setDriveMotors(-1 , -1);
+		// Timer.delay(0.01);
+		// Sets motor speeds to 0
 		Robot.driveTrain.setDriveMotors(0, 0);
+		// Stops timer
 		timer.stop();
 	}
 

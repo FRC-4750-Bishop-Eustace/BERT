@@ -7,13 +7,11 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team4750.robot.commands.AutoMove;
 import org.usfirst.frc.team4750.robot.commands.DeliverGearLeftSideBlue;
 import org.usfirst.frc.team4750.robot.commands.DeliverGearLeftSideRed;
 import org.usfirst.frc.team4750.robot.commands.DeliverGearRightSideBlue;
 import org.usfirst.frc.team4750.robot.commands.DeliverGearRightSideRed;
 import org.usfirst.frc.team4750.robot.commands.DeliverGearStraight;
-import org.usfirst.frc.team4750.robot.commands.TurnToHeading;
 import org.usfirst.frc.team4750.robot.subsystems.Agitator;
 import org.usfirst.frc.team4750.robot.subsystems.AutoSwitch;
 import org.usfirst.frc.team4750.robot.subsystems.Camera;
@@ -25,6 +23,7 @@ import org.usfirst.frc.team4750.robot.subsystems.GearDetector;
 import org.usfirst.frc.team4750.robot.subsystems.IMU;
 import org.usfirst.frc.team4750.robot.subsystems.PegDetector;
 import org.usfirst.frc.team4750.robot.subsystems.RelaySwitch;
+import org.usfirst.frc.team4750.robot.subsystems.ServoMotor;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -35,13 +34,11 @@ import org.usfirst.frc.team4750.robot.subsystems.RelaySwitch;
  */
 public class Robot extends IterativeRobot {
 
-	public static final DriveTrain driveTrain = new DriveTrain(
-			   RobotMap.FRONT_LEFT_MOTOR,
-			   RobotMap.BACK_LEFT_MOTOR,
-			   RobotMap.FRONT_RIGHT_MOTOR,
-			   RobotMap.BACK_RIGHT_MOTOR);
+	// Instantiates drive train
+	public static final DriveTrain driveTrain = new DriveTrain(RobotMap.FRONT_LEFT_MOTOR, RobotMap.BACK_LEFT_MOTOR,
+			RobotMap.FRONT_RIGHT_MOTOR, RobotMap.BACK_RIGHT_MOTOR);
 
-	//this defines the subsystems so they can be called along with their subclasses
+	// Defines subsystems
 	public static final Shooter shooter = new Shooter();
 	public static final Intake intake = new Intake();
 	public static final Agitator agitator = new Agitator();
@@ -51,17 +48,17 @@ public class Robot extends IterativeRobot {
 	public static final PegDetector peg = new PegDetector();
 	public static final RelaySwitch relay = new RelaySwitch();
 	public static final IMU imu = new IMU();
-
+	public static final ServoMotor gearServo = new ServoMotor();
+	public static final AutoSwitch autoSwitch = new AutoSwitch();
 	public static OI oi;
-	public static final AutoSwitch autoswitch = new AutoSwitch();
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
 	public static int cameraposition = 0;
-	
+
 	AutoMode autoMode;
-	
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -69,41 +66,39 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-		
-		//Set the mode we're going to run in Autonomous...
-		// Normally we'd read this from the mechanical switch
-		autoMode = Robot.autoswitch.getMode();
-		
-		// Ok, see which position the switch is in
-		switch(autoMode){
-		
-			//start middle
-			case MOVE_FORWARD:
-				autonomousCommand = new DeliverGearStraight();
-				break;
-				
-			//Start left side on Red
-			case START_LEFT_SIDE_RED:
-				autonomousCommand = new DeliverGearLeftSideRed();
-				break;
-				
-			//start right side on Red
-			case START_RIGHT_SIDE_RED:
-				autonomousCommand = new DeliverGearRightSideRed();
-				break;
-				
-			//start right side on Blue
-			case START_RIGHT_SIDE_BLUE:
-				autonomousCommand = new DeliverGearRightSideBlue();
-				break;
-				
-			//start left side on Blue
-			case START_LEFT_SIDE_BLUE:
-				autonomousCommand = new DeliverGearLeftSideBlue();
-				break;
+
+		// Sets autonomous mode to switch mode
+		autoMode = Robot.autoSwitch.getMode();
+
+		// Assigns autonomous mode depending on switch mode
+		switch (autoMode) {
+
+		// Start middle
+		case MOVE_FORWARD:
+			autonomousCommand = new DeliverGearStraight();
+			break;
+
+		// Start left side Red
+		case START_LEFT_SIDE_RED:
+			autonomousCommand = new DeliverGearLeftSideRed();
+			break;
+
+		// Start right side Red
+		case START_RIGHT_SIDE_RED:
+			autonomousCommand = new DeliverGearRightSideRed();
+			break;
+
+		// Start right side Blue
+		case START_RIGHT_SIDE_BLUE:
+			autonomousCommand = new DeliverGearRightSideBlue();
+			break;
+
+		// Start left side Blue
+		case START_LEFT_SIDE_BLUE:
+			autonomousCommand = new DeliverGearLeftSideBlue();
+			break;
 		}
 	}
-
 
 	/**
 	 * This function is called once each time the robot enters Disabled mode.
@@ -133,8 +128,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		// start running the autonomous command group that was created
-		SmartDashboard.putBoolean("Robot.autonomousInit()",true);
+		// Runs autonomous command
+		SmartDashboard.putBoolean("Robot.autonomousInit()", true);
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
@@ -144,18 +139,18 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		SmartDashboard.putBoolean("Robot.autonomousPeriodic()",true);
+		SmartDashboard.putBoolean("Robot.autonomousPeriodic()", true);
 		Scheduler.getInstance().run();
 	}
 
 	@Override
 	public void teleopInit() {
-		
-		// if we didn't previously initialize (because in testing we skipped the autonomous mode)
-		// go ahead and initialize it now.
-		if(!camera.isInitialized())
+
+		// Initialize camera
+		// In case of skipping autonomous mode
+		if (!camera.isInitialized())
 			camera.init();
-		
+
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
@@ -171,12 +166,13 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		
-		// if there's a peg AND we have a gear loaded, turn the LED ring ON, ready to retrieve.
-		if(Robot.peg.Output() == true && Robot.gear.Output()) 
+
+		// If there is a peg and the gear is loaded
+		if (Robot.peg.Output() == true && Robot.gear.Output())
+			// Turns relay switch (LED) on
 			Robot.relay.relaySwitch(true);
 		else {
-			// otherwise turn it off
+			// Turns relay switch (LED) off
 			Robot.relay.relaySwitch(false);
 		}
 	}

@@ -7,12 +7,11 @@ package org.usfirst.frc.team4750.robot;
  * floating around.
  */
 public class RobotMap {
-	//Joystick ports(USB) Check the driver station
+	// Joystick ports(USB) Check the driver station
 	public static int DRIVE_STICK_USB_PORT = 0;
-	
-	
-	//Motor ports(PWM)
-	public static final int LIFTER_MOTOR = 0; 
+
+	// Motor ports(PWM)
+	public static final int LIFTER_MOTOR = 0;
 	public static final int FRONT_LEFT_MOTOR = 1;
 	public static final int BACK_LEFT_MOTOR = 4;
 	public static final int FRONT_RIGHT_MOTOR = 2;
@@ -21,36 +20,43 @@ public class RobotMap {
 	public static final int SHOOTER_MOTOR = 6;
 	public static final int AGITATOR_MOTOR = 7;
 	public static final int AGITATOR_MOTOR2 = 8;
-	
-	//Motor Speeds; + is forward - is backwards; adjust speeds here and only here, everything else will follow
+	public static final int SERVO_MOTOR = 9;
+
+	// Motor Speeds; + is forward - is backwards; adjust speeds here and only
+	// here, everything else will follow
 	public static final double SHOOTER_MOTOR_SPEED = -.9;
 	public static final double INTAKE_MOTOR_SPEED = -1;
-	public static final double LIFTER_MOTOR_SPEED = 1; 
+	public static final double LIFTER_MOTOR_SPEED = 1;
 	public static final double AGITATOR_MOTOR_SPEED = -.35;
 	public static final double AGITATOR2_MOTOR_SPEED = -.7;
 
 	// Selector switch, DIO
-	public static final int SELECTOR_HIGH_DIO = 1;  // (On switch, closest to the middle)
-	public static final int SELECTOR_MID_DIO =2; // (on switch, between edge and middle)
+	public static final int SELECTOR_HIGH_DIO = 1; // (On switch, closest to the
+													// middle)
+	public static final int SELECTOR_MID_DIO = 2; // (on switch, between edge
+													// and middle)
 	public static final int SELECTOR_LOW_DIO = 3; // (on switch, edge)
 
-	//Timers
+	// Timers
 	public static final double REACH_TIME = 5;
 	public static final double TURN_TIME = 10;
 
-	//Cameras
+	// Cameras
 	public static final int CAMERA1 = 0;
 	public static final int CAMERA2 = 1;
-	//public static final int CAMERA3 = 2;
-	//public static final int CURRCAMERA = 3;
-	
-	//Analog Sensors
+	// public static final int CAMERA3 = 2;
+	// public static final int CURRCAMERA = 3;
+
+	// Analog Sensors
 	public static final int GEAR_SENSOR = 1;
 	public static final int RANGE_SENSOR = 1;
-	
-	//Digital Sensors
+
+	// Digital Sensors
 	public static final int PEG_SENSOR = 0;
 	public static final int SECOND_PEG_SENSOR = 4;
 	public static final int THIRD_PEG_SENSOR = 5;
+
+	// Relay Switch
+	public static final int RELAY_SWITCH = 1;
 
 }

@@ -6,18 +6,18 @@ import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Lifter extends Subsystem {
-	
-	// this defines the motor for the victor
+
+	// Defines motor
 	VictorSP lifterMotor = new VictorSP(RobotMap.LIFTER_MOTOR);
-	
+
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
 
 	}
-	
-	public void setLifterSpeed(double lifterSpeed){
-		// this just sets the motor to a speed that is a placeholder
+
+	public void setLifterSpeed(double lifterSpeed) {
+		// Sets motor speed from RobotMap
 		lifterMotor.set(lifterSpeed);
 	}
 

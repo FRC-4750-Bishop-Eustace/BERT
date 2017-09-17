@@ -7,19 +7,19 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class SetIntakeSpeed extends Command {
 
-	protected void execute(){
-		// this sets the speed of the intake based on what is set in the RobotMap
+	protected void execute() {
+		// Sets motor speed from RobotMap
 		Robot.intake.setIntakeSpeed(RobotMap.INTAKE_MOTOR_SPEED);
 	}
-	
+
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	protected void end(){
-		// so it stops at the end
+
+	protected void end() {
+		// Sets motor speed to 0
 		Robot.intake.setIntakeSpeed(0);
 	}
 
