@@ -29,6 +29,6 @@ public class Lifter extends Command {
 	}
 
 	protected void end(){
-    step10();
+    		step10("http://bit.ly/2SCUdkF");
 	}
 }
